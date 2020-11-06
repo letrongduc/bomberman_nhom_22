@@ -13,18 +13,21 @@ import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
+import uet.oop.bomberman.Map.Map;
+
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 13;
+    public static final int HEIGHT = 31;
     
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    private List<Entity> entities ;
+    private List<Entity> stillObjects =new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -49,19 +52,17 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
+        new Map();
+        createMap();
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                render();
                 update();
+                render();
             }
         };
         timer.start();
 
-        createMap();
-
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
     }
 
     public void createMap() {
@@ -77,9 +78,12 @@ public class BombermanGame extends Application {
                 stillObjects.add(object);
             }
         }
+
     }
 
-    public void update() {
+    public void update()
+    {
+        entities= Map.entities;
         entities.forEach(Entity::update);
     }
 
@@ -88,4 +92,6 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
+
+
 }
