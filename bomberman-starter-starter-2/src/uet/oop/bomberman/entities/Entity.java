@@ -11,7 +11,7 @@ public abstract class Entity {
     protected double x;
     protected double y;
     protected Image img;
-
+    protected String keymove="";
     public Entity( int x, int y, Image img) {
         this.x = x;
         this.y = y;
@@ -27,5 +27,18 @@ public abstract class Entity {
 
         gc.drawImage(base, x * Sprite.SCALED_SIZE, y * Sprite.SCALED_SIZE);
     }
+
+    public String getKeymove() {
+        return keymove;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
     public abstract void update();
 }
