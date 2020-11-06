@@ -21,12 +21,13 @@ import java.util.List;
 
 public class BombermanGame extends Application {
     
-    public static final int WIDTH = 13;
-    public static final int HEIGHT = 31;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
     
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> entities ;
+    private List<Entity> nonmovingentities ;
+    private List<Entity> movingentities ;
     private List<Entity> stillObjects =new ArrayList<>();
 
 
@@ -83,14 +84,17 @@ public class BombermanGame extends Application {
 
     public void update()
     {
-        entities= Map.entities;
-        entities.forEach(Entity::update);
+        nonmovingentities= Map.nonmovingentities;
+        movingentities=Map.movingentities;
+        movingentities.forEach(Entity::update);
+        nonmovingentities.forEach(Entity::update);
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+        movingentities.forEach(g -> g.render(gc));
+        nonmovingentities.forEach(g -> g.render(gc));
     }
 
 
