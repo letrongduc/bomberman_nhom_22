@@ -9,6 +9,7 @@ import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
@@ -84,28 +85,30 @@ public class Bomber extends Entity {
     }
     @Override
     public void update() {
-        KeyListener a = new batsukien();
-
+        new controlhandle();
         if(keymove=="d" && hold == true) img=Bombermoveright();
 
     }
-    class batsukien implements KeyListener {
+    class controlhandle extends JFrame implements KeyListener {
+        public controlhandle(){
+            addKeyListener(this);
+        }
+
         @Override
         public void keyTyped(KeyEvent e) {
-            hold=true;
-            System.out.println(1);
+            hold=false;
+            System.out.println(hold);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
-            hold=false;
-            System.out.println(2);
+            hold=true;
+            System.out.println(hold);
         }
 
         @Override
         public void keyReleased(KeyEvent e) {
             if(e.getKeyCode() == KeyEvent.VK_D) keymove ="d";
-            System.out.println(3);
         }
     }
 }
