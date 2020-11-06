@@ -7,7 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
-
+import uet.oop.bomberman.Map.Map;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -23,7 +23,6 @@ public class Bomber extends Entity {
     private List<Image> imgdead=new ArrayList<>();
 
     private Boolean hold;
-    private String keymove ;
     public Bomber(int x, int y, Image img) {
         super( x, y, img);
 
@@ -51,6 +50,10 @@ public class Bomber extends Entity {
         keymove="";
     }
 
+    public String getKeymove() {
+        return keymove;
+    }
+
     private Image Bombermoveleft(){
         if(img==imgmoveleft.get(0)) return imgmoveleft.get(1);
         else if(img==imgmoveleft.get(1)) return imgmoveleft.get(2);
@@ -60,7 +63,7 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermoveright(){
-        if(x < BombermanGame.WIDTH-2) x=x+0.3;
+        if(x < BombermanGame.WIDTH-2 && Map.checkcollision(x,y,"d") ) x=x+0.4;
         if(img==imgmoveright.get(0)) return imgmoveright.get(1);
         else if(img==imgmoveright.get(1)) return imgmoveright.get(2);
         else if(img==imgmoveright.get(2))
@@ -87,6 +90,7 @@ public class Bomber extends Entity {
     public void update() {
         new controlhandle();
         if(keymove=="d" && hold == true) img=Bombermoveright();
+        img=Bombermoveright();
 
     }
     class controlhandle extends JFrame implements KeyListener {
