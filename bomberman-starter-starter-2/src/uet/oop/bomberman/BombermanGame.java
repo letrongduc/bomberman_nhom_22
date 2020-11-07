@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
@@ -36,6 +35,30 @@ public class BombermanGame extends Application {
 
     }
 
+    public abstract class AnimationTimerExt extends AnimationTimer {
+
+        private long sleepNs = 0;
+
+        long prevTime = 0;
+
+        public AnimationTimerExt( long sleepMs) {
+            this.sleepNs = sleepMs * 1000000;
+        }
+
+        @Override
+        public void handle(long now) {
+
+            // some delay
+            if ((now-prevTime) < sleepNs) {
+                return;
+            }
+            prevTime = now;
+            handle();
+        }
+
+        public abstract void handle();
+
+    }
     @Override
     public void start(Stage stage) {
         // Tao Canvas
@@ -55,11 +78,12 @@ public class BombermanGame extends Application {
 
         new Map();
         createMap();
-        AnimationTimer timer = new AnimationTimer() {
+
+        AnimationTimerExt timer =new AnimationTimerExt(28) {
             @Override
-            public void handle(long l) {
-                update();
-                render();
+            public void handle() {
+            update();
+            render();
             }
         };
         timer.start();
