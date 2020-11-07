@@ -65,26 +65,24 @@ public class Map {
             for(int i =0;i<nonmovingentities.size()-1;i++){
                 if(keymove=="d"){
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||nonmovingentities.get(i).getY()==y) {
-                        if (x+1 + 0.4 >= nonmovingentities.get(i).getX()) {
-                            System.out.println(x+","+y);
-                            System.out.println(nonmovingentities.get(i).getX() + "," + nonmovingentities.get(i).getY());
+                        if (x+0.5 + 0.3 >= nonmovingentities.get(i).getX()) {
                             return false;
                         }
                     }
                 }
                 if(keymove=="a"){
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||nonmovingentities.get(i).getY()==y) {
-                        if (x - 0.4 < nonmovingentities.get(i).getX()) return false;
+                        if (x - 0.3 < nonmovingentities.get(i).getX()) return false;
                     }
                 }
                 if(keymove=="w"){
                     if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x)||nonmovingentities.get(i).getX()==x) {
-                        if (y - 0.4 < nonmovingentities.get(i).getY()) return false;
+                        if (y - 0.3 < nonmovingentities.get(i).getY()) return false;
                     }
                 }
                 if(keymove=="s"){
                     if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x)||nonmovingentities.get(i).getX()==x) {
-                        if (y+1 + 0.4 > nonmovingentities.get(i).getY()) return false;
+                        if (y+1 + 0.3 > nonmovingentities.get(i).getY()) return false;
                     }
                 }
             }
