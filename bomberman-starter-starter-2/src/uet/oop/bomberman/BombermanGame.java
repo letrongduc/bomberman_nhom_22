@@ -47,7 +47,6 @@ public class BombermanGame extends Application {
 
         @Override
         public void handle(long now) {
-            System.out.println(now-prevTime);
             // some delay
             if ((now-prevTime) < sleepNs) {
                 return;
