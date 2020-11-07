@@ -59,17 +59,13 @@ public class Bomber extends Entity {
         else if(img==imgmoveleft.get(1)) return imgmoveleft.get(2);
         else if(img==imgmoveleft.get(2)) return imgmoveleft.get(0);
         else return imgmoveleft.get(0);
-
     }
 
     private Image Bombermoveright(){
         if(x < BombermanGame.WIDTH-2 && Map.checkcollision(x,y,"d") ) x=x+0.3;
         if(img==imgmoveright.get(0)) return imgmoveright.get(1);
         else if(img==imgmoveright.get(1)) return imgmoveright.get(2);
-        else if(img==imgmoveright.get(2))
-        {
-            return imgmoveright.get(0);
-        }
+        else if(img==imgmoveright.get(2)) return imgmoveright.get(0);
         else return imgmoveright.get(0);
     }
 
