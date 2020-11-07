@@ -89,4 +89,18 @@ public class Map {
             System.out.println();
         return true;
     }
+    public static List directionposible(double x,double y){
+        List<String> d=new ArrayList<>();
+        d.add("a");
+        d.add("d");
+        d.add("w");
+        d.add("s");
+        for(int i =0;i<nonmovingentities.size()-1;i++){
+            if(nonmovingentities.get(i).getY()==y-1&&nonmovingentities.get(i).getX()==x) d.remove(2);
+            if(nonmovingentities.get(i).getY()==y+1&&nonmovingentities.get(i).getX()==x) d.remove(3);
+            if(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()==x-1) d.remove(0);
+            if(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()==x+1) d.remove(1);
+        }
+        return d;
+    }
 }
