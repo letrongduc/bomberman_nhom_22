@@ -16,7 +16,7 @@ public class Map {
 
     public Map(){
         area.add("###############################");
-        area.add("#p     ** *  1 * 2 *  * * *   #");
+        area.add("#p     ** * *1 * 2 *  * * *   #");
         area.add("# # # #*# # #*#*# # # #*#*#*# #");
         area.add("# # # # # #*# # #*#*# # # # #*#");
         area.add("#  x*     ***  *  1   * 2 * * #");
@@ -62,10 +62,13 @@ public class Map {
         }
     }
     public static boolean checkcollision(double x,double y ,String keymove){
-            for(int i =0;i<nonmovingentities.size()-1;i++){
+        System.out.println("ok2");
+            for(int i =0;i<nonmovingentities.size();i++){
                 if(keymove=="d"){
-                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||nonmovingentities.get(i).getY()==y) {
+                    System.out.println("ok1 "+i+","+nonmovingentities.size());
+                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()>x)) {
                         if (x+0.5 + 0.3 >= nonmovingentities.get(i).getX()) {
+                            System.out.println(nonmovingentities.get(i).getX()+","+nonmovingentities.get(i).getY());
                             return false;
                         }
                     }
@@ -96,10 +99,10 @@ public class Map {
         d.add("w");
         d.add("s");
         for(int i =0;i<nonmovingentities.size()-1;i++){
-            if(nonmovingentities.get(i).getY()==y-1&&nonmovingentities.get(i).getX()==x) d.remove(2);
-            if(nonmovingentities.get(i).getY()==y+1&&nonmovingentities.get(i).getX()==x) d.remove(3);
-            if(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()==x-1) d.remove(0);
-            if(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()==x+1) d.remove(1);
+            if(nonmovingentities.get(i).getY()==y-1&&nonmovingentities.get(i).getX()==x) d.remove("w");
+            if(nonmovingentities.get(i).getY()==y+1&&nonmovingentities.get(i).getX()==x) d.remove("s");
+            if(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()==x-1) d.remove("a");
+            if(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()==x+1) d.remove("d");
         }
         return d;
     }
