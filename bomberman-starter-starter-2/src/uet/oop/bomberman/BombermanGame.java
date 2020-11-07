@@ -42,12 +42,12 @@ public class BombermanGame extends Application {
         long prevTime = 0;
 
         public AnimationTimerExt( long sleepMs) {
-            this.sleepNs = sleepMs * 1000000;
+            this.sleepNs = sleepMs * 100000;
         }
 
         @Override
         public void handle(long now) {
-
+            System.out.println(now-prevTime);
             // some delay
             if ((now-prevTime) < sleepNs) {
                 return;
@@ -79,7 +79,7 @@ public class BombermanGame extends Application {
         new Map();
         createMap();
 
-        AnimationTimerExt timer =new AnimationTimerExt(28) {
+        AnimationTimerExt timer =new AnimationTimerExt(1000) {
             @Override
             public void handle() {
             update();
