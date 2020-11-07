@@ -7,11 +7,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Entity {
     protected double x;
     protected double y;
     protected Image img;
     protected String keymove="";
+
     public Entity( int x, int y, Image img) {
         this.x = x;
         this.y = y;
