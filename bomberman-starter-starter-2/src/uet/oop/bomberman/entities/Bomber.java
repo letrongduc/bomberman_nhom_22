@@ -86,7 +86,7 @@ public class Bomber extends Entity {
     public void update() {
         new controlhandle();
         if(keymove=="d" && hold == true) img=Bombermoveright();
-        img=Bombermoveright();
+        img=Bombermoveleft();
 
     }
     class controlhandle extends JFrame implements KeyListener {
