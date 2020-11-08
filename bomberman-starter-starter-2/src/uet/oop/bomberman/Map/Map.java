@@ -65,7 +65,6 @@ public class Map {
         System.out.println("ok2");
             for(int i =0;i<nonmovingentities.size();i++){
                 if(keymove=="d"){
-                    System.out.println("ok1 "+i+","+nonmovingentities.size());
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()>x)) {
                         if (x+0.5 + 0.3 >= nonmovingentities.get(i).getX()) {
                             System.out.println(nonmovingentities.get(i).getX()+","+nonmovingentities.get(i).getY());
@@ -92,7 +91,9 @@ public class Map {
             System.out.println();
         return true;
     }
-    public static List directionposible(double x,double y){
+    public static List directionposible(double dx,double dy){
+        int x=(int) dx;
+        int y =(int) dy;
         List<String> d=new ArrayList<>();
         d.add("a");
         d.add("d");
