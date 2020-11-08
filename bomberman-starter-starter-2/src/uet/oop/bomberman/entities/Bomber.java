@@ -58,8 +58,6 @@ public class Bomber extends Entity {
         return keymove;
     }
 
-
-
     public void setKeymove(String keymove) {
         this.keymove = keymove;
     }
