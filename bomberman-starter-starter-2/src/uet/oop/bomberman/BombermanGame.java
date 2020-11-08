@@ -12,7 +12,6 @@ import javafx.event.*;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.*;
 
-
 import uet.oop.bomberman.graphics.Sprite;
 
 
@@ -24,6 +23,7 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
+
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
 
@@ -32,7 +32,6 @@ public class BombermanGame extends Application {
     private List<Entity> nonmovingentities;
     private List<Entity> movingentities;
     private List<Entity> stillObjects = new ArrayList<>();
-
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -52,7 +51,9 @@ public class BombermanGame extends Application {
         @Override
         public void handle(long now) {
             // some delay
+
             if ((now - prevTime) < sleepNs) {
+
                 return;
             }
             prevTime = now;
@@ -84,7 +85,6 @@ public class BombermanGame extends Application {
         Bomber myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
         myMap.movingentities.add(myBomber);
         createMap();
-
 
         AnimationTimerExt timer = new AnimationTimerExt(1000) {
             @Override

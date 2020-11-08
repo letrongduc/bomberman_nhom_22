@@ -76,7 +76,7 @@ public class Balloom extends Entity {
 
     private Image Balloommovedown(){
         System.out.println(4);
-        if(y<=BombermanGame.HEIGHT-2 && Map.checkcollision(x,y,"Dowm") ) y=y+0.2;
+        if(y<=BombermanGame.HEIGHT-2 && Map.checkcollision(x,y,"Down") ) y=y+0.2;
         if(img==imgmovedown.get(0)) return imgmovedown.get(1);
         else if(img==imgmovedown.get(1)) return imgmovedown.get(2);
         else if(img==imgmovedown.get(2)) return imgmovedown.get(0);
@@ -91,6 +91,7 @@ public class Balloom extends Entity {
         if(keymove=="Right") img=Balloommoveleft();
         if(keymove=="Up") img=Balloommoveup();
         if(keymove=="Down") img=Balloommovedown();
+
     }
 
     @Override

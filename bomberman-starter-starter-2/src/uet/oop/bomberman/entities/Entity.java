@@ -14,6 +14,7 @@ public abstract class Entity {
     protected double x;
     protected double y;
     protected Image img;
+    protected String keymove="";
 
     protected String keymove = "";
 

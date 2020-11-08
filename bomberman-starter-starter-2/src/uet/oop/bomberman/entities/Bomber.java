@@ -17,6 +17,7 @@ import java.util.List;
 
 public class Bomber extends Entity {
 
+
     private List<Image> imgmoveleft = new ArrayList<>();
     private List<Image> imgmoveright = new ArrayList<>();
     private List<Image> imgmoveup = new ArrayList<>();
@@ -58,6 +59,7 @@ public class Bomber extends Entity {
     }
 
 
+
     public void setKeymove(String keymove) {
         this.keymove = keymove;
     }
@@ -75,7 +77,9 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermoveright(){
+
         if(x < BombermanGame.WIDTH-2 && Map.checkcollision(x,y,"Right") ) x=x+0.3;
+
         if(img==imgmoveright.get(0)) return imgmoveright.get(1);
         else if(img==imgmoveright.get(1)) return imgmoveright.get(2);
         else if(img==imgmoveright.get(2)) return imgmoveright.get(0);
@@ -100,6 +104,7 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
+
 
 //        new controlhandle();
         if (keymove == "Right" && hold == true) img = Bombermoveright();

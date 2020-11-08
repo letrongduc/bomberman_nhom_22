@@ -81,6 +81,7 @@ public class Map {
             if (keymove == "Down") {
                 if ((nonmovingentities.get(i).getX() > x - 1 && nonmovingentities.get(i).getX() < x) || (nonmovingentities.get(i).getX() < x + 1 && nonmovingentities.get(i).getX() > x) || nonmovingentities.get(i).getX() == x) {
                     if (y + 1 + 0.3 > nonmovingentities.get(i).getY()) return false;
+
                 }
             }
         }
@@ -102,4 +103,5 @@ public class Map {
         }
         return d;
     }
+
 }
