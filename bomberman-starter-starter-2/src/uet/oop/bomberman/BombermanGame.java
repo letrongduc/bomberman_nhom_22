@@ -63,7 +63,6 @@ public class BombermanGame extends Application {
         public abstract void handle();
 
     }
-
     @Override
     public void start(Stage stage) {
         // Tao Canvas
@@ -85,15 +84,6 @@ public class BombermanGame extends Application {
         Bomber myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
         myMap.movingentities.add(myBomber);
         createMap();
-
-        AnimationTimerExt timer = new AnimationTimerExt(1000) {
-            @Override
-            public void handle() {
-                update();
-                render();
-            }
-        };
-        timer.start();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -134,6 +124,14 @@ public class BombermanGame extends Application {
                 }
             }
         });
+        AnimationTimerExt timer = new AnimationTimerExt(1000) {
+            @Override
+            public void handle() {
+                update();
+                render();
+            }
+        };
+        timer.start();
     }
 
     public void createMap() {
