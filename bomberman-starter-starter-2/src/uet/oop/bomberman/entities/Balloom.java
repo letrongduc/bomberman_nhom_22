@@ -42,6 +42,7 @@ public class Balloom extends Entity {
 
     private String  getkeymoving(){
         List<String> d= Map.directionposible(x,y);
+        System.out.println(x+","+y);
         Random generator = new Random(40);
         int key =generator.nextInt(d.size());
         return d.get(key);
