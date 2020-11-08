@@ -62,7 +62,7 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermoveright(){
-        if(x < BombermanGame.WIDTH-2 && Map.checkcollision(x,y,"d") ) x=x+0.3;
+        if(x < BombermanGame.WIDTH-2 && Map.checkcollision(x,y,"d",0.5,0.3) ) x=x+0.3;
         if(img==imgmoveright.get(0)) return imgmoveright.get(1);
         else if(img==imgmoveright.get(1)) return imgmoveright.get(2);
         else if(img==imgmoveright.get(2)) return imgmoveright.get(0);
