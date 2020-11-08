@@ -7,10 +7,13 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+
+import javafx.event.*;
+import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.entities.*;
+
 import uet.oop.bomberman.graphics.Sprite;
+
 
 import uet.oop.bomberman.Map.Map;
 
@@ -19,16 +22,16 @@ import java.util.List;
 
 
 public class BombermanGame extends Application {
-    
+
+
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
-    
+
     private GraphicsContext gc;
     private Canvas canvas;
-    private List<Entity> nonmovingentities ;
-    private List<Entity> movingentities ;
-    private List<Entity> stillObjects =new ArrayList<>();
-
+    private List<Entity> nonmovingentities;
+    private List<Entity> movingentities;
+    private List<Entity> stillObjects = new ArrayList<>();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -41,14 +44,16 @@ public class BombermanGame extends Application {
 
         long prevTime = 0;
 
-        public AnimationTimerExt( long sleepMs) {
+        public AnimationTimerExt(long sleepMs) {
             this.sleepNs = sleepMs * 100000;
         }
 
         @Override
         public void handle(long now) {
             // some delay
-            if ((now-prevTime) < sleepNs) {
+
+            if ((now - prevTime) < sleepNs) {
+
                 return;
             }
             prevTime = now;
@@ -58,6 +63,7 @@ public class BombermanGame extends Application {
         public abstract void handle();
 
     }
+
     @Override
     public void start(Stage stage) {
         // Tao Canvas
@@ -75,18 +81,59 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
-        new Map();
+        Map myMap = new Map();
+        Bomber myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
+        myMap.movingentities.add(myBomber);
         createMap();
 
-        AnimationTimerExt timer =new AnimationTimerExt(1000) {
+        AnimationTimerExt timer = new AnimationTimerExt(1000) {
             @Override
             public void handle() {
-            update();
-            render();
+                update();
+                render();
             }
         };
         timer.start();
 
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(javafx.scene.input.KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        myBomber.setHold(true);
+                        myBomber.setKeymove("Up");
+                        break;
+                    case DOWN:
+                        myBomber.setHold(true);
+                        myBomber.setKeymove("Down");
+                        break;
+                    case LEFT:
+                        myBomber.setHold(true);
+                        myBomber.setKeymove("Left");
+                        break;
+                    case RIGHT:
+                        myBomber.setHold(true);
+                        myBomber.setKeymove("Right");
+                        break;
+                }
+            }
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        myBomber.setHold(false);
+                    case DOWN:
+                        myBomber.setHold(false);
+                    case LEFT:
+                        myBomber.setHold(false);
+                    case RIGHT:
+                        myBomber.setHold(false);
+                }
+            }
+        });
     }
 
     public void createMap() {
@@ -95,8 +142,7 @@ public class BombermanGame extends Application {
                 Entity object;
                 if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
                     object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
+                } else {
                     object = new Grass(i, j, Sprite.grass.getFxImage());
                 }
                 stillObjects.add(object);
@@ -105,10 +151,9 @@ public class BombermanGame extends Application {
 
     }
 
-    public void update()
-    {
-        nonmovingentities= Map.nonmovingentities;
-        movingentities=Map.movingentities;
+    public void update() {
+        nonmovingentities = Map.nonmovingentities;
+        movingentities = Map.movingentities;
         movingentities.forEach(Entity::update);
         nonmovingentities.forEach(Entity::update);
     }
@@ -119,6 +164,6 @@ public class BombermanGame extends Application {
         movingentities.forEach(g -> g.render(gc));
         nonmovingentities.forEach(g -> g.render(gc));
     }
-
-
 }
+
+
