@@ -61,12 +61,11 @@ public class Map {
             }
         }
     }
-    public static boolean checkcollision(double x,double y ,String keymove){
-        System.out.println("ok2");
+    public static boolean checkcollision(double x,double y ,String keymove,double widthentity,double distance){
             for(int i =0;i<nonmovingentities.size();i++){
                 if(keymove=="d"){
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()>x)) {
-                        if (x+0.5 + 0.3 >= nonmovingentities.get(i).getX()) {
+                        if (x+widthentity +distance >= nonmovingentities.get(i).getX()) {
                             System.out.println(nonmovingentities.get(i).getX()+","+nonmovingentities.get(i).getY());
                             return false;
                         }
@@ -74,17 +73,17 @@ public class Map {
                 }
                 if(keymove=="a"){
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||nonmovingentities.get(i).getY()==y) {
-                        if (x - 0.3 < nonmovingentities.get(i).getX()) return false;
+                        if (x - distance < nonmovingentities.get(i).getX()) return false;
                     }
                 }
                 if(keymove=="w"){
                     if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x)||nonmovingentities.get(i).getX()==x) {
-                        if (y - 0.3 < nonmovingentities.get(i).getY()) return false;
+                        if (y - distance < nonmovingentities.get(i).getY()) return false;
                     }
                 }
                 if(keymove=="s"){
                     if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x)||nonmovingentities.get(i).getX()==x) {
-                        if (y+1 + 0.3 > nonmovingentities.get(i).getY()) return false;
+                        if (y+1 + distance > nonmovingentities.get(i).getY()) return false;
                     }
                 }
             }
