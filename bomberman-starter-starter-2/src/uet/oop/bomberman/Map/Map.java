@@ -41,8 +41,6 @@ public class Map {
                     Entity object = new Brick(j, i, Sprite.brick.getFxImage());
                     nonmovingentities.add(object);
                 } else if (area.get(i).charAt(j) == 'p') {
-//                    Entity object = new Bomber(j, i, Sprite.player_right.getFxImage());
-//                    movingentities.add(object);
                     bomberX = i;
                     bomberY = j;
                 } else if (area.get(i).charAt(j) == '1') {
