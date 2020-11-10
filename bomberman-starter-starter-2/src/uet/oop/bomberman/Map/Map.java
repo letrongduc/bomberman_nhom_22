@@ -18,22 +18,20 @@ public class Map {
     public static int bomberY;
 
     public Map() {
-        area.add("###############################");
-        area.add("#p     ** * *1 * 2 *  * * *   #");
-        area.add("# # # #*# # #*#*# # # #*#*#*# #");
-        area.add("# # # # # #*# # #*#*# # # # #*#");
-        area.add("#  x*     ***  *  1   * 2 * * #");
-        area.add("#f         x **  *  *   1     #");
-        area.add("# # # # # # # # # #*# #*# # # #");
-        area.add("#*  *      *  *      *        #");
-        area.add("# # # # #*# # # #*#*# # # # # #");
-        area.add("#*    **  *       *           #");
-        area.add("# #*# # # # # # #*# # # # # # #");
-        area.add("#           *   *  *          #");
-        area.add("###############################");
+        area.add("p     ** * *1 * 2 *  * * *   ");
+        area.add(" # # #*# # #*#*# # # #*#*#*# ");
+        area.add(" # # # # #*# # #*#*# # # # #*");
+        area.add("  x*     ***  *  1   * 2 * * ");
+        area.add("f         x **  *  *   1     ");
+        area.add(" # # # # # # # # #*# #*# # # ");
+        area.add("*  *      *  *      *        ");
+        area.add(" # # # #*# # # #*#*# # # # # ");
+        area.add("*    **  *       *           ");
+        area.add(" #*# # # # # # #*# # # # # # ");
+        area.add("           *   *  *          ");
 
-        for (int i = 1; i < area.size() - 1; i++) {
-            for (int j = 1; j < area.get(1).length() - 1; j++) {
+        for (int i = 0; i < area.size() ; i++) {
+            for (int j = 0; j < area.get(1).length() ; j++) {
                 if (area.get(i).charAt(j) == '#') {
                     Entity object = new Wall(j, i, Sprite.wall.getFxImage());
                     nonmovingentities.add(object);
@@ -53,28 +51,31 @@ public class Map {
             }
         }
     }
-    public static boolean checkcollision(double x,double y ,String keymove,double widthentity,double distance){
+    public static boolean checkcollision(double dx,double dy ,String keymove,double widthentity,double distance){
+            double x=(double) Math.round(dx * 100) / 100;
+            double y=(double) Math.round(dy * 100) / 100;
             for(int i =0;i<nonmovingentities.size();i++){
                 if(keymove=="Right"){
-                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||(nonmovingentities.get(i).getY()==y&&nonmovingentities.get(i).getX()>x)) {
-                        if (x+widthentity +distance >= nonmovingentities.get(i).getX()) {
-                            System.out.println(nonmovingentities.get(i).getX()+","+nonmovingentities.get(i).getY());
+                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()>x) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()>x)||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()>x)) {
+                        if (x+1 +distance > nonmovingentities.get(i).getX()) {
                             return false;
                         }
                     }
                 }
                 if(keymove=="Left"){
-                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1)||nonmovingentities.get(i).getY()==y) {
-                        if (x - distance < nonmovingentities.get(i).getX()) return false;
+                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()<x) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()<x)||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()<x)) {
+                        if (x-1- distance < nonmovingentities.get(i).getX()) {
+                            return false;
+                        }
                     }
                 }
                 if(keymove=="Up"){
-                    if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x)||nonmovingentities.get(i).getX()==x) {
-                        if (y - distance < nonmovingentities.get(i).getY()) return false;
+                    if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x&&nonmovingentities.get(i).getY()<y)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x&&nonmovingentities.get(i).getY()<y)||(nonmovingentities.get(i).getX()==x &&nonmovingentities.get(i).getY()<y)) {
+                        if (y - 1 - distance < nonmovingentities.get(i).getY()) return false;
                     }
                 }
                 if(keymove=="Down"){
-                    if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x)||nonmovingentities.get(i).getX()==x) {
+                    if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x&& nonmovingentities.get(i).getY()>y)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x&& nonmovingentities.get(i).getY()>y)||(nonmovingentities.get(i).getX()==x && nonmovingentities.get(i).getY()>y)) {
                         if (y+1 + distance > nonmovingentities.get(i).getY()) return false;
                     }
 
@@ -84,7 +85,9 @@ public class Map {
         return true;
     }
 
-    public static List directionposible(double x, double y) {
+    public static List directionposible(double dx, double dy) {
+        double x=(double) Math.round(dx * 100) / 100;
+        double y=(double) Math.round(dy * 100) / 100;
         List<String> d = new ArrayList<>();
         d.add("Left");
         d.add("Right");
@@ -98,5 +101,4 @@ public class Map {
         }
         return d;
     }
-
 }
