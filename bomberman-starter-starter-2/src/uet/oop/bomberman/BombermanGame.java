@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javafx.event.*;
@@ -17,6 +18,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import uet.oop.bomberman.Map.Map;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,14 +26,14 @@ import java.util.List;
 public class BombermanGame extends Application {
 
 
-    public static final int WIDTH = 31;
-    public static final int HEIGHT = 13;
+    public static final int WIDTH = 29;
+    public static final int HEIGHT = 11;
 
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> nonmovingentities;
-    private List<Entity> movingentities;
-    private List<Entity> stillObjects = new ArrayList<>();
+    private List<Entity> movingentities=new ArrayList<>();
+    private int keyrender=0;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -45,7 +47,7 @@ public class BombermanGame extends Application {
         long prevTime = 0;
 
         public AnimationTimerExt(long sleepMs) {
-            this.sleepNs = sleepMs * 100000;
+            this.sleepNs = sleepMs * 1000000;
         }
 
         @Override
@@ -66,7 +68,7 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) {
         // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
         gc = canvas.getGraphicsContext2D();
 
         // Tao root container
@@ -74,8 +76,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
 
         // Tao scene
-        Scene scene = new Scene(root);
-
+        Scene scene = new Scene(root, Color.GREEN);
         // Them scene vao stage
         stage.setScene(scene);
         stage.show();
@@ -83,7 +84,6 @@ public class BombermanGame extends Application {
         Map myMap = new Map();
         Bomber myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
         myMap.movingentities.add(myBomber);
-        createMap();
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -124,31 +124,24 @@ public class BombermanGame extends Application {
                 }
             }
         });
-        AnimationTimerExt timer = new AnimationTimerExt(1000) {
+        AnimationTimerExt timer = new AnimationTimerExt(100) {
             @Override
             public void handle() {
+                removerender();
                 update();
                 render();
             }
         };
         timer.start();
     }
-
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                } else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
+    public void removerender(){
+        if(movingentities.size()!=0)
+        for(int i=0;i<movingentities.size();i++){
+            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
+            gc.clearRect(32*movingentities.get(i).getX(), 32*movingentities.get(i).getY(), 32, 32);
         }
 
     }
-
     public void update() {
         nonmovingentities = Map.nonmovingentities;
         movingentities = Map.movingentities;
@@ -157,10 +150,15 @@ public class BombermanGame extends Application {
     }
 
     public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
+//        for(int i=0;i<movingentities.size();i++){
+//            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
+//            gc.clearRect(movingentities.get(i).getX(), movingentities.get(i).getY(), 32, 32);
+//        }
         movingentities.forEach(g -> g.render(gc));
-        nonmovingentities.forEach(g -> g.render(gc));
+        if(keyrender == 0) {
+            nonmovingentities.forEach(g -> g.render(gc));
+            keyrender=keyrender+1;
+        }
     }
 }
 
