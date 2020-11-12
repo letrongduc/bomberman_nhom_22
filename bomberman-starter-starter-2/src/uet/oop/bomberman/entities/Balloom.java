@@ -82,8 +82,8 @@ public class Balloom extends Entity {
         if (MovingLoopindex==10) MovingLoopindex=0;
         if (MovingLoopindex==0) keymove=getkeymoving();
         MovingLoopindex = MovingLoopindex+1;
-        if(keymove=="Left") img=Balloommoveright();
-        if(keymove=="Right") img=Balloommoveleft();
+        if(keymove=="Left") img=Balloommoveleft();
+        if(keymove=="Right") img=Balloommoveright();
         if(keymove=="Up") img=Balloommoveup();
         if(keymove=="Down") img=Balloommovedown();
 

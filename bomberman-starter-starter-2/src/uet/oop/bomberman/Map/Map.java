@@ -45,7 +45,7 @@ public class Map {
                     Entity object = new Balloom(j, i, Sprite.balloom_left1.getFxImage());
                     movingentities.add(object);
                 } else if (area.get(i).charAt(j) == '2') {
-                    Entity object = new Minvo(j, i, Sprite.minvo_left1.getFxImage());
+                    Entity object = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
                     movingentities.add(object);
                 }
             }
