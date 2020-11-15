@@ -14,15 +14,16 @@ public class Map {
     public static List<Entity> movingentities = new ArrayList<>();
     public static ArrayList<String> area = new ArrayList<>();
 
-    public static int bomberX;
-    public static int bomberY;
+//    public static int bomberX;
+//    public static int bomberY;
+    public static Bomber myBomber;
 
     public Map() {
-        area.add("p     ** * *1 * 2 *  * * *   ");
+        area.add("p    2** * *1 *   *  * * *   ");
         area.add(" # # #*# # #*#*# # # #*#*#*# ");
         area.add(" # # # # #*# # #*#*# # # # #*");
-        area.add("  x*     ***  *  1   * 2 * * ");
-        area.add("f         x **  *  *   1     ");
+        area.add("  x*     ***  *  1   *   * * ");
+        area.add("          x **  *  *   1     ");
         area.add(" # # # # # # # # #*# #*# # # ");
         area.add("*  *      *  *      *        ");
         area.add(" # # # #*# # # #*#*# # # # # ");
@@ -39,8 +40,10 @@ public class Map {
                     Entity object = new Brick(j, i, Sprite.brick.getFxImage());
                     nonmovingentities.add(object);
                 } else if (area.get(i).charAt(j) == 'p') {
-                    bomberX = i;
-                    bomberY = j;
+//                    bomberX = i;
+//                    bomberY = j;
+                    myBomber = new Bomber(j, i, Sprite.player_right.getFxImage());
+                    movingentities.add(myBomber);
                 } else if (area.get(i).charAt(j) == '1') {
                     Entity object = new Balloom(j, i, Sprite.balloom_left1.getFxImage());
                     movingentities.add(object);
@@ -100,5 +103,42 @@ public class Map {
             if (nonmovingentities.get(i).getY() == y && nonmovingentities.get(i).getX() == x + 1) d.remove("Right");
         }
         return d;
+    }
+
+    public static Boolean checkSpace(double l1, double l2, double index){
+        if((l1 < l2 && l1 < index && index < l2) || (l1 > l2 && l1 > index && index > l2)){
+            return true;
+        }
+        return false;
+    }
+
+    public static Boolean checkLocalVer(double x, double y){
+        for (int i = 0; i < nonmovingentities.size(); i++) {
+            double noMoveX = nonmovingentities.get(i).getX();
+            double noMoveY = nonmovingentities.get(i).getY();
+            double bomberY = Map.myBomber.getY();
+            if(noMoveX == x && checkSpace(bomberY, y, noMoveY) == true){
+//                System.out.println("chan doc");
+//                System.out.println(nonmovingentities.get(i).getX() + " " + nonmovingentities.get(i).getY());
+                return false;
+            }
+        }
+//        System.out.println("thoang doc");
+        return true;
+    }
+
+    public static Boolean checkLocalHor(double x, double y){
+        for (int i = 0; i < nonmovingentities.size(); i++) {
+            double noMoveX = nonmovingentities.get(i).getX();
+            double noMoveY = nonmovingentities.get(i).getY();
+            double bomberX = Map.myBomber.getX();
+            if(noMoveY == y && checkSpace(bomberX, x, noMoveX) == true){
+//                System.out.println("chan ngang");
+//                System.out.println(nonmovingentities.get(i).getX() + " " + nonmovingentities.get(i).getY());
+                return false;
+            }
+        }
+//        System.out.println("thoang ngang");
+        return true;
     }
 }

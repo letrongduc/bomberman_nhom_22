@@ -34,6 +34,7 @@ public class BombermanGame extends Application {
     private List<Entity> nonmovingentities;
     private List<Entity> movingentities=new ArrayList<>();
     private int keyrender=0;
+//    public static Bomber myBomber;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -81,29 +82,29 @@ public class BombermanGame extends Application {
         stage.setScene(scene);
         stage.show();
 
-        Map myMap = new Map();
-        Bomber myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
-        myMap.movingentities.add(myBomber);
+        new Map();
+//        myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
+//        myMap.movingentities.add(myBomber);
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(javafx.scene.input.KeyEvent event) {
                 switch (event.getCode()) {
                     case UP:
-                        myBomber.setHold(true);
-                        myBomber.setKeymove("Up");
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Up");
                         break;
                     case DOWN:
-                        myBomber.setHold(true);
-                        myBomber.setKeymove("Down");
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Down");
                         break;
                     case LEFT:
-                        myBomber.setHold(true);
-                        myBomber.setKeymove("Left");
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Left");
                         break;
                     case RIGHT:
-                        myBomber.setHold(true);
-                        myBomber.setKeymove("Right");
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Right");
                         break;
                 }
             }
@@ -114,13 +115,13 @@ public class BombermanGame extends Application {
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
                     case UP:
-                        myBomber.setHold(false);
+                        Map.myBomber.setHold(false);
                     case DOWN:
-                        myBomber.setHold(false);
+                        Map.myBomber.setHold(false);
                     case LEFT:
-                        myBomber.setHold(false);
+                        Map.myBomber.setHold(false);
                     case RIGHT:
-                        myBomber.setHold(false);
+                        Map.myBomber.setHold(false);
                 }
             }
         });
@@ -137,7 +138,7 @@ public class BombermanGame extends Application {
     public void removerender(){
         if(movingentities.size()!=0)
         for(int i=0;i<movingentities.size();i++){
-            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
+//            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
             gc.clearRect(32*movingentities.get(i).getX(), 32*movingentities.get(i).getY(), 32, 32);
         }
 
