@@ -26,7 +26,7 @@ public class Map {
         area.add("# # # # # #*# # #*#*# # # # #*#");
         area.add("#*           **  *  *        1#");
         area.add("# # # # # # # # # #*# #*# # # #");
-        area.add("#*  *     1*  *               #");
+        area.add("#*  * 1    *  *               #");
         area.add("# # # # #*# # # #*#*# # # # # #");
         area.add("#*    **  *       *           #");
         area.add("# #*# # # # # # #*# # # # # # #");
@@ -64,36 +64,39 @@ public class Map {
             double y=(double) Math.round(dy * 100) / 100;
             for(int i =0;i<nonmovingentities.size();i++){
                 if(keymove=="Right"){
+                    double Distance=(double) Math.round((x+1+ distance)*100)/100;
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()>x)
                             || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()>x)
                             ||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()>x)) {
-                        if (x+1 +distance > nonmovingentities.get(i).getX()) {
+                        if (Distance > nonmovingentities.get(i).getX()) {
                             return false;
                         }
                     }
                 }
                 if(keymove=="Left"){
+                    double Distance=(double) Math.round((x-1- distance)*100)/100;
                     if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()<x)
                             || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()<x)
                             ||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()<x)) {
-                        if (x-1- distance < nonmovingentities.get(i).getX()) {
+                        if (Distance < nonmovingentities.get(i).getX()) {
                             return false;
                         }
                     }
                 }
                 if(keymove=="Up"){
+                    double Distance=(double) Math.round((y - 1 - distance)*100)/100;
                     if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x&&nonmovingentities.get(i).getY()<y)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x&&nonmovingentities.get(i).getY()<y)||(nonmovingentities.get(i).getX()==x &&nonmovingentities.get(i).getY()<y)) {
                         if (y - 1 - distance < nonmovingentities.get(i).getY()) return false;
                     }
                 }
                 if(keymove=="Down"){
+                    double Distance=(double) Math.round((y+1 + distance)*100)/100;
                     if ((nonmovingentities.get(i).getX()>x-1&&nonmovingentities.get(i).getX()<x&& nonmovingentities.get(i).getY()>y)|| (nonmovingentities.get(i).getX()<x+1 && nonmovingentities.get(i).getX()>x&& nonmovingentities.get(i).getY()>y)||(nonmovingentities.get(i).getX()==x && nonmovingentities.get(i).getY()>y)) {
                         if (y+1 + distance > nonmovingentities.get(i).getY()) return false;
                     }
 
                 }
             }
-        System.out.println();
         return true;
     }
 
