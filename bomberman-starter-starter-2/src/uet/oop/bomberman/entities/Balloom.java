@@ -84,12 +84,7 @@ public class Balloom extends Entity {
     }
     private void MovingLoop(){
         if (MovingLoopindex==10) MovingLoopindex=0;
-
-        System.out.println("loop = " + MovingLoopindex);
-        System.out.println("toa do quai: " + x + " " + y);
-
-//        if (MovingLoopindex==0) keymove=getkeymoving();
-        if (MovingLoopindex==0) keymove="Left";
+        if (MovingLoopindex==0) keymove=getkeymoving();
         MovingLoopindex = MovingLoopindex+1;
         if(keymove=="Left") img=Balloommoveleft();
         if(keymove=="Right") img=Balloommoveright();
