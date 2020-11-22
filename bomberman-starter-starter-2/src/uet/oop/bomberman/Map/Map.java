@@ -19,17 +19,19 @@ public class Map {
     public static Bomber myBomber;
 
     public Map() {
-        area.add("p    2** * *1 *   *  * * *   ");
-        area.add(" # # #*# # #*#*# # # #*#*#*# ");
-        area.add(" # # # # #*# # #*#*# # # # #*");
-        area.add("  x*     ***  *  1   *   * * ");
-        area.add("          x **  *  *   1     ");
-        area.add(" # # # # # # # # #*# #*# # # ");
-        area.add("*  *      *  *      *        ");
-        area.add(" # # # #*# # # #*#*# # # # # ");
-        area.add("*    **  *       *           ");
-        area.add(" #*# # # # # # #*# # # # # # ");
-        area.add("           *   *  *          ");
+        area.add("###############################");
+        area.add("#      ** *    * 2 *  * * *  3#");
+        area.add("# # # #*# # #*#*# # # #*#*#*# #");
+        area.add("#  **     ***  *      * 2 * * #");
+        area.add("# # # # # #*# # #*#*# # # # #*#");
+        area.add("#*           **  *  *        1#");
+        area.add("# # # # # # # # # #*# #*# # # #");
+        area.add("#*  *     1*  *               #");
+        area.add("# # # # #*# # # #*#*# # # # # #");
+        area.add("#*    **  *       *           #");
+        area.add("# #*# # # # # # #*# # # # # # #");
+        area.add("#    p      *   *  *          #");
+        area.add("###############################");
 
         for (int i = 0; i < area.size() ; i++) {
             for (int j = 0; j < area.get(1).length() ; j++) {
@@ -50,6 +52,9 @@ public class Map {
                 } else if (area.get(i).charAt(j) == '2') {
                     Entity object = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
                     movingentities.add(object);
+                } else if (area.get(i).charAt(j) == '3') {
+                    Entity object = new Minvo(j, i, Sprite.minvo_left1.getFxImage());
+                    movingentities.add(object);
                 }
             }
         }
@@ -59,14 +64,18 @@ public class Map {
             double y=(double) Math.round(dy * 100) / 100;
             for(int i =0;i<nonmovingentities.size();i++){
                 if(keymove=="Right"){
-                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()>x) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()>x)||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()>x)) {
+                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()>x)
+                            || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()>x)
+                            ||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()>x)) {
                         if (x+1 +distance > nonmovingentities.get(i).getX()) {
                             return false;
                         }
                     }
                 }
                 if(keymove=="Left"){
-                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()<x) || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()<x)||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()<x)) {
+                    if((nonmovingentities.get(i).getY()>y-1 && nonmovingentities.get(i).getY()<y&& nonmovingentities.get(i).getX()<x)
+                            || (nonmovingentities.get(i).getY()>y && nonmovingentities.get(i).getY()<y+1&& nonmovingentities.get(i).getX()<x)
+                            ||(nonmovingentities.get(i).getY()==y && nonmovingentities.get(i).getX()<x)) {
                         if (x-1- distance < nonmovingentities.get(i).getX()) {
                             return false;
                         }
@@ -140,5 +149,19 @@ public class Map {
         }
 //        System.out.println("thoang ngang");
         return true;
+    }
+
+    public static int[][] duyetMap(){
+        int[][] check = new int[area.size()][area.get(1).length()];
+        for (int i = 0; i < area.size(); i++) {
+            for (int j = 0; j < area.get(1).length(); j++) {
+                if(area.get(i).charAt(j) == '*' || area.get(i).charAt(j) == '#'){
+                    check[i][j] = 1;
+                } else {
+                    check[i][j] = 0;
+                }
+            }
+        }
+        return check;
     }
 }

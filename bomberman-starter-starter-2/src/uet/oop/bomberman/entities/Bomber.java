@@ -98,7 +98,6 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-
         if (keymove == "Right" && hold == true) img = Bombermoveright();
         if (keymove == "Up" && hold == true) img = Bombermoveup();
         if (keymove == "Down" && hold == true) img = Bombermovedown();
