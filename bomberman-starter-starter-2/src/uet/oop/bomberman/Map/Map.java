@@ -13,7 +13,7 @@ public class Map {
     public static List<Entity> nonmovingentities = new ArrayList<>();
     public static List<Entity> movingentities = new ArrayList<>();
     public static ArrayList<String> area = new ArrayList<>();
-
+    public static Bomb bomb;
 //    public static int bomberX;
 //    public static int bomberY;
     public static Bomber myBomber;
@@ -42,8 +42,6 @@ public class Map {
                     Entity object = new Brick(j, i, Sprite.brick.getFxImage());
                     nonmovingentities.add(object);
                 } else if (area.get(i).charAt(j) == 'p') {
-//                    bomberX = i;
-//                    bomberY = j;
                     myBomber = new Bomber(j, i, Sprite.player_right.getFxImage());
                     movingentities.add(myBomber);
                 } else if (area.get(i).charAt(j) == '1') {
@@ -167,4 +165,13 @@ public class Map {
         }
         return check;
     }
+
+    public static void startbomb(){
+        bomb = new Bomb(myBomber.getX(),myBomber.getY(),Sprite.bomb.getFxImage());
+        movingentities.add(bomb);
+        if(bomb.isEnd == true) {
+            movingentities.remove(movingentities.size()-1);
+        }
+    }
+
 }
