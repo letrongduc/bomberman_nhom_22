@@ -17,7 +17,7 @@ public abstract class Entity {
     protected String keymove="";
 
 
-    public Entity(int x, int y, Image img) {
+    public Entity(double x, double y, Image img) {
         this.x = x;
         this.y = y;
         this.img = img;
