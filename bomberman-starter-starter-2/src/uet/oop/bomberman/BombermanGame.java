@@ -159,6 +159,7 @@ public class BombermanGame extends Application {
         if(keyrender == 0) {
             nonmovingentities.forEach(g -> g.render(gc));
             keyrender=keyrender+1;
+            Map.startbomb();
         }
     }
 }
