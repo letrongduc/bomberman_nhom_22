@@ -1,17 +1,9 @@
 package uet.oop.bomberman.entities;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.bombEffect.Explosion_horizontal;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.Map.Map;
 
-import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 public class Bomb extends Entity{
@@ -25,13 +17,15 @@ public class Bomb extends Entity{
     private List<Image> explosion_vertical_down = new ArrayList<>();
     private List<Image> explosion_vertical_top = new ArrayList<>();
     private int idbomb=1;
-    static private boolean isexploded =false;
+    static public boolean isexploded=false;
     private int timedelaycount =0;
     private int timeexploded=0;
     public boolean isEnd = false;
+    private Explosion_horizontal explosion_horizontal1;
 
     public Bomb(double x,double y,Image img){
         super(x,y,img);
+        isexploded=true;
         Bombbig.add(Sprite.bomb.getFxImage());
         Bombbig.add(Sprite.bomb_1.getFxImage());
 
@@ -90,19 +84,19 @@ public class Bomb extends Entity{
             else return Bomb_exploded.get(0);
     }
     public Image looptime(){
-        System.out.println(timeexploded);
-        System.out.println(isEnd);
             if (timedelaycount == 16)
             {
-                isexploded=true;
-                if(timeexploded!= 6){
+                //explosion_horizontal1= new Explosion_horizontal(getX()+1,getY(), Sprite.explosion_horizontal.getFxImage());
+                //Map.movingentities.add(explosion_horizontal1);
+                isEnd =true;
+                if(timeexploded != 6){
                     timeexploded=timeexploded+1;
-                    if(timedelaycount % 2 == 0 ) return Bombexploded();
-                    else return img;
+                     return Bombexploded();
                 }
                 else {
+                    //Map.movingentities.remove(explosion_horizontal1);
                     isexploded=false;
-                    isEnd =true;
+                    isEnd =false;
                     return null;
                 }
             }
