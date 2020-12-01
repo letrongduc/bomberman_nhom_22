@@ -15,7 +15,7 @@ public abstract class Entity {
     protected double y;
     protected Image img;
     protected String keymove="";
-
+    protected boolean ischange = true;
 
     public Entity(double x, double y, Image img) {
         this.x = x;
@@ -43,6 +43,18 @@ public abstract class Entity {
 
     public double getY() {
         return y;
+    }
+
+    public void setIschange(boolean ischange) {
+        this.ischange = ischange;
+    }
+
+    public boolean isIschange() {
+        return ischange;
+    }
+
+    public Image getImg() {
+        return img;
     }
 
     public abstract void update();
