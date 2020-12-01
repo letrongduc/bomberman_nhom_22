@@ -65,7 +65,7 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermoveleft() {
-        if (x >0 && Map.checkcollision(x, y, "Left",0.8,0.25)) x = x - 0.25;
+        if (x >0 && Map.checkcollisionmoving(x, y, "Left",0.8,0.25)) x = x - 0.25;
         if (img == imgmoveleft.get(0)) return imgmoveleft.get(1);
         else if (img == imgmoveleft.get(1)) return imgmoveleft.get(2);
         else if (img == imgmoveleft.get(2)) return imgmoveleft.get(0);
@@ -73,7 +73,7 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermoveright(){
-        if(x < BombermanGame.WIDTH-1 && Map.checkcollision(x,y,"Right",0.5,0.25) ) x=x+0.25;
+        if(x < BombermanGame.WIDTH-1 && Map.checkcollisionmoving(x,y,"Right",0.5,0.25) ) x=x+0.25;
         if(img==imgmoveright.get(0)) return imgmoveright.get(1);
         else if(img==imgmoveright.get(1)) return imgmoveright.get(2);
         else if(img==imgmoveright.get(2)) return imgmoveright.get(0);
@@ -81,7 +81,7 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermoveup() {
-        if (y > 0 && Map.checkcollision(x, y, "Up",0.5,0.25)) y = y - 0.25;
+        if (y > 0 && Map.checkcollisionmoving(x, y, "Up",0.5,0.25)) y = y - 0.25;
         if (img == imgmoveup.get(0)) return imgmoveup.get(1);
         else if (img == imgmoveup.get(1)) return imgmoveup.get(2);
         else if (img == imgmoveup.get(2)) return imgmoveup.get(0);
@@ -89,7 +89,7 @@ public class Bomber extends Entity {
     }
 
     private Image Bombermovedown() {
-        if (y < BombermanGame.HEIGHT - 1 && Map.checkcollision(x, y, "Down",0.5,0.25)) y = y + 0.25;
+        if (y < BombermanGame.HEIGHT - 1 && Map.checkcollisionmoving(x, y, "Down",0.5,0.25)) y = y + 0.25;
         if (img == imgmovedown.get(0)) return imgmovedown.get(1);
         else if (img == imgmovedown.get(1)) return imgmovedown.get(2);
         else if (img == imgmovedown.get(2)) return imgmovedown.get(0);
