@@ -32,6 +32,7 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> nonmovingentities;
+    private List<Entity> nonmovingrerenderentities;
     private List<Entity> movingentities=new ArrayList<>();
     private int keyrender=0;
 //    public static Bomber myBomber;
@@ -106,6 +107,9 @@ public class BombermanGame extends Application {
                         Map.myBomber.setHold(true);
                         Map.myBomber.setKeymove("Right");
                         break;
+                    case SPACE:
+                        Map.startbomb();
+                        break;
                 }
             }
         });
@@ -128,6 +132,7 @@ public class BombermanGame extends Application {
         AnimationTimerExt timer = new AnimationTimerExt(100) {
             @Override
             public void handle() {
+                Map.deleteNonmovingentities();
                 removerender();
                 update();
                 render();
@@ -141,13 +146,25 @@ public class BombermanGame extends Application {
 //            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
             gc.clearRect(32*movingentities.get(i).getX(), 32*movingentities.get(i).getY(), 32, 32);
         }
+        if(nonmovingrerenderentities!= null) {
+            if (nonmovingrerenderentities.size() != 0)
+                for (int i = 0; i < nonmovingrerenderentities.size(); i++) {
+//            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
+                    if(nonmovingrerenderentities.get(i) instanceof Brick == true && nonmovingrerenderentities.get(i).isIschange() ==true)
+                    {
 
+                        gc.clearRect(32 * nonmovingrerenderentities.get(i).getX(), 32 * nonmovingrerenderentities.get(i).getY(), 32, 32);
+                    }
+                }
+        }
     }
     public void update() {
         nonmovingentities = Map.nonmovingentities;
+        nonmovingrerenderentities=Map.nonmovingrerenderentities;
         movingentities = Map.movingentities;
-        movingentities.forEach(Entity::update);
         nonmovingentities.forEach(Entity::update);
+        nonmovingrerenderentities.forEach(Entity::update);
+        movingentities.forEach(Entity::update);
     }
 
     public void render() {
@@ -155,12 +172,12 @@ public class BombermanGame extends Application {
 //            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
 //            gc.clearRect(movingentities.get(i).getX(), movingentities.get(i).getY(), 32, 32);
 //        }
-        movingentities.forEach(g -> g.render(gc));
         if(keyrender == 0) {
             nonmovingentities.forEach(g -> g.render(gc));
             keyrender=keyrender+1;
-            Map.startbomb();
         }
+        if (nonmovingrerenderentities != null) nonmovingrerenderentities.forEach(g -> g.render(gc));
+        movingentities.forEach(g -> g.render(gc));
     }
 }
 
