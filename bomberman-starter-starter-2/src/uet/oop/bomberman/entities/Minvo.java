@@ -72,7 +72,7 @@ public class Minvo extends Entity {
     }
 
     private Image minvoMoveLeft() {
-        if (x > 0 && Map.checkcollision(x, y, "Left", 1, 0.1))
+        if (x > 0 && Map.checkcollisionmoving(x, y, "Left", 1, 0.1))
             x = (double) Math.round((x - 0.1) * 10) / 10;
         if (img == imgMoveLeft.get(0)) return imgMoveLeft.get(1);
         else if (img == imgMoveLeft.get(1)) return imgMoveLeft.get(2);
@@ -81,7 +81,7 @@ public class Minvo extends Entity {
     }
 
     private Image minvoMoveRight() {
-        if (x < BombermanGame.WIDTH - 1 && Map.checkcollision(x, y, "Right", 1, 0.1))
+        if (x < BombermanGame.WIDTH - 1 && Map.checkcollisionmoving(x, y, "Right", 1, 0.1))
             x = (double) Math.round((x + 0.1) * 10) / 10;
         if (img == imgMoveRight.get(0)) return imgMoveRight.get(1);
         else if (img == imgMoveRight.get(1)) return imgMoveRight.get(2);
@@ -90,7 +90,7 @@ public class Minvo extends Entity {
     }
 
     private Image minvoMoveUp() {
-        if (y > 0 && Map.checkcollision(x, y, "Up", 1, 0.1))
+        if (y > 0 && Map.checkcollisionmoving(x, y, "Up", 1, 0.1))
             y = (double) Math.round((y - 0.1) * 10) / 10;
         if (img == imgMoveUp.get(0)) return imgMoveUp.get(1);
         else if (img == imgMoveUp.get(1)) return imgMoveUp.get(2);
@@ -99,7 +99,7 @@ public class Minvo extends Entity {
     }
 
     private Image minvoMoveDown() {
-        if (y < BombermanGame.HEIGHT - 1 && Map.checkcollision(x, y, "Down", 1, 0.1))
+        if (y < BombermanGame.HEIGHT - 1 && Map.checkcollisionmoving(x, y, "Down", 1, 0.1))
             y = (double) Math.round((y + 0.1) * 10) / 10;
         if (img == imgMoveDown.get(0)) return imgMoveDown.get(1);
         else if (img == imgMoveDown.get(1)) return imgMoveDown.get(2);
