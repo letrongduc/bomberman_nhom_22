@@ -49,7 +49,7 @@ public class BombermanGame extends Application {
         long prevTime = 0;
 
         public AnimationTimerExt(long sleepMs) {
-            this.sleepNs = sleepMs * 1000000;
+            this.sleepNs = sleepMs * 500000;
         }
 
         @Override
