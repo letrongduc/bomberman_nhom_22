@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Explosion_horizontal_left extends Entity {
+public class Explosion_horizontal_left extends bombEffect {
     private List<Image> Explosion_horizontal_left = new ArrayList<>();
 
     public Explosion_horizontal_left(double x, double y, Image img){
@@ -26,7 +26,12 @@ public class Explosion_horizontal_left extends Entity {
     }
     @Override
     public void update() {
-        if(Map.bomb.isEnd == true) img=Explosion_horizontal_left();
-        else img=null;
+        if(Map.bomb.isEnd == true) {
+            if(Map.isokBombEffect[0]== false) Map.checkdeadbybomb(this.x,this.y);
+            img = Explosion_horizontal_left();
+        }
+        else {
+            img = null;
+        }
     }
 }
