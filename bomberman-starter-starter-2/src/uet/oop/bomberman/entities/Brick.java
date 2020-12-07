@@ -33,7 +33,7 @@ public class Brick extends Entity {
         {
             for (int i = 0; i < Map.nonmovingrerenderentities.size(); i++)
                 if (Map.nonmovingrerenderentities.get(i) == this) {
-                    if (counttime == 40) {
+                    if (counttime == 60) {
                         if (destroydelaycount % 3 == 0) {
                             img = destroyingBrick();
                             destroydelaycount++;
