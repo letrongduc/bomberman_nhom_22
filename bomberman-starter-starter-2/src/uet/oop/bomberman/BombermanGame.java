@@ -132,10 +132,10 @@ public class BombermanGame extends Application {
         AnimationTimerExt timer = new AnimationTimerExt(100) {
             @Override
             public void handle() {
-                Map.deleteNonmovingentities();
                 removerender();
                 update();
                 render();
+                Map.deleteEntities();
             }
         };
         timer.start();
