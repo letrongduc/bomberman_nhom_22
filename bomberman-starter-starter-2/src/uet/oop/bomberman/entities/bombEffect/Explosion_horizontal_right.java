@@ -6,7 +6,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
-public class Explosion_horizontal_right extends Entity {
+public class Explosion_horizontal_right extends bombEffect {
     private List<Image> explosion_horizontal_right = new ArrayList<>();
 
     public Explosion_horizontal_right(double x, double y, Image img){
@@ -23,7 +23,12 @@ public class Explosion_horizontal_right extends Entity {
     }
     @Override
     public void update() {
-        if(Map.bomb.isEnd == true) img=explosion_horizontal_right();
-        else img=null;
+        if(Map.bomb.isEnd == true) {
+            if(Map.isokBombEffect[1]== false)Map.checkdeadbybomb(this.x,this.y);
+            img = explosion_horizontal_right();
+        }
+        else {
+            img = null;
+        }
     }
 }
