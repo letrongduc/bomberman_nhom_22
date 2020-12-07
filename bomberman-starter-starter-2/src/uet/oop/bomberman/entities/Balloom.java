@@ -15,6 +15,7 @@ public class Balloom extends Entity {
     private List<Image> imgmoveup=new ArrayList<>();
     private List<Image> imgmovedown=new ArrayList<>();
     private List<Image> imgdead=new ArrayList<>();
+    private int countisdead=0;
 
     private int MovingLoopindex;
     public Balloom(int x, int y, Image img) {
@@ -91,9 +92,19 @@ public class Balloom extends Entity {
         if(keymove=="Up") img=Balloommoveup();
         if(keymove=="Down") img=Balloommovedown();
     }
-
+    private Image Balloomdead(){
+        return imgdead.get(0);
+    }
     @Override
     public void update() {
-        MovingLoop();
+        if(isdead==false)
+        {
+            MovingLoop();
+        }
+        else {
+            countisdead=countisdead+1;
+            if(countisdead <=12  ) img = Balloomdead();
+            else img=null;
+        }
     }
 }
