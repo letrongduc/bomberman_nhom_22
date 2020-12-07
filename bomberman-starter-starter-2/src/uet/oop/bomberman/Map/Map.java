@@ -27,16 +27,16 @@ public class Map {
     public static Explosion_vertical_top explosion_verticaltop;
     public static Explosion_vertical_down explosion_verticaldown;
 
-    public static List<Entity> explosion1=new ArrayList<>();
-    public static List<Entity> explosion2 =new ArrayList<>();
-    public static List<Entity> explosionlast =new ArrayList<>();
+    public static List<Entity> explosion1 = new ArrayList<>();
+    public static List<Entity> explosion2 = new ArrayList<>();
+    public static List<Entity> explosionlast = new ArrayList<>();
 
     public static boolean isokleft = false;
     public static boolean isokright = false;
     public static boolean isokup = false;
     public static boolean isokdown = false;
 
-    public static boolean[] isokBombEffect =new boolean[4];
+    public static boolean[] isokBombEffect = new boolean[4];
     public static boolean isokadd = true;
 
     public static int counttime = 0;
@@ -197,38 +197,18 @@ public class Map {
         if (Bomb.isexploded == false) {
             nonmovingrerenderentities = new ArrayList<>();
             movingentities.remove(bomb);
-//            movingentities.remove(explosion_horizontal1left);
-//            movingentities.remove(explosion_horizontal1right);
-//            movingentities.remove(explosion_horizontalleft);
-//            movingentities.remove(explosion_horizontalright);
-//            movingentities.remove(explosion_vertical1top);
-//            movingentities.remove(explosion_vertical1down);
-//            movingentities.remove(explosion_verticaltop);
-//            movingentities.remove(explosion_verticaldown);
-            if(explosion1 != null)
-            for(int i=0;i<explosion1.size();i++)
-            {
-                movingentities.remove(explosion1.get(i));
-            }
-            if(explosionlast != null)
-            for(int i=0;i<explosionlast.size();i++)
-            {
-                movingentities.remove(explosionlast.get(i));
-            }
-            explosion1=new ArrayList<>();
-            explosionlast=new ArrayList<>();
+            if (explosion1 != null)
+                for (int i = 0; i < explosion1.size(); i++) {
+                    movingentities.remove(explosion1.get(i));
+                }
+            if (explosionlast != null)
+                for (int i = 0; i < explosionlast.size(); i++) {
+                    movingentities.remove(explosionlast.get(i));
+                }
+            explosion1 = new ArrayList<>();
+            explosionlast = new ArrayList<>();
             bomb = new Bomb(myBomber.getX(), myBomber.getY(), Sprite.bomb.getFxImage());
             System.out.println(Bomb.isexploded);
-//            explosion_horizontal1left = new Explosion_horizontal(bomb.getX() + 1, bomb.getY(), Sprite.explosion_horizontal.getFxImage());
-//            explosion_horizontal1right = new Explosion_horizontal(bomb.getX() - 1, bomb.getY(), Sprite.explosion_horizontal.getFxImage());
-//            explosion_horizontalleft = new Explosion_horizontal_left(bomb.getX() + 2, bomb.getY(), Sprite.explosion_horizontal_left_last.getFxImage());
-//            explosion_horizontalright = new Explosion_horizontal_right(bomb.getX() - 2, bomb.getY(), Sprite.explosion_horizontal_right_last.getFxImage());
-//
-//            explosion_vertical1top = new Explosion_vertical(bomb.getX(), bomb.getY() - 1, Sprite.explosion_vertical.getFxImage());
-//            explosion_vertical1down = new Explosion_vertical(bomb.getX(), bomb.getY() + 1, Sprite.explosion_vertical.getFxImage());
-//            explosion_verticaltop = new Explosion_vertical_top(bomb.getX(), bomb.getY() - 2, Sprite.explosion_vertical_top_last.getFxImage());
-//            explosion_verticaldown = new Explosion_vertical_down(bomb.getX(), bomb.getY() + 2, Sprite.explosion_vertical_down_last.getFxImage());
-
             //1left
             explosion1.add(new Explosion_horizontal(bomb.getX() + 1, bomb.getY(), Sprite.explosion_horizontal.getFxImage()));
             //1right
@@ -250,34 +230,23 @@ public class Map {
 
             movingentities.add(bomb);
 
-//            movingentities.add(explosion_horizontal1left);
-//            movingentities.add(explosion_horizontal1right);
-//            movingentities.add(explosion_horizontalleft);
-//            movingentities.add(explosion_horizontalright);
-//            movingentities.add(explosion_vertical1top);
-//            movingentities.add(explosion_vertical1down);
-//            movingentities.add(explosion_verticaltop);
-//            movingentities.add(explosion_verticaldown);
-
-            for(int i=0;i<explosion1.size();i++)
-            {
+            for (int i = 0; i < explosion1.size(); i++) {
                 movingentities.add(explosion1.get(i));
             }
-            for(int i=0;i<explosionlast.size();i++)
-            {
+            for (int i = 0; i < explosionlast.size(); i++) {
                 movingentities.add(explosionlast.get(i));
             }
 
-            for (int i=0;i<4;i++){
+            for (int i = 0; i < 4; i++) {
                 isokBombEffect[i] = false;
             }
 
 
-            for(int i=0;i<nonmovingentities.size();i++){
-                for(int j=0;j<explosion1.size();j++){
-                    if(checkcolision(explosion1.get(j).getX(),explosion1.get(j).getY(),nonmovingentities.get(i).getX(),nonmovingentities.get(i).getY())==true){
+            for (int i = 0; i < nonmovingentities.size(); i++) {
+                for (int j = 0; j < explosion1.size(); j++) {
+                    if (checkcolision(explosion1.get(j).getX(), explosion1.get(j).getY(), nonmovingentities.get(i).getX(), nonmovingentities.get(i).getY()) == true) {
                         nonmovingrerenderentities.add(nonmovingentities.get(i));
-                        if (isokBombEffect[j]== false) {
+                        if (isokBombEffect[j] == false) {
                             nonmovingentities.get(i).setIschange(true);
                         }
                         isokBombEffect[j] = true;
@@ -285,117 +254,62 @@ public class Map {
                     }
                 }
             }
-            System.out.println(nonmovingrerenderentities.size());
-            for (int i=0 ; i< nonmovingrerenderentities.size();i++)
-            {
-                System.out.println(nonmovingrerenderentities.get(i).getX()+" "+nonmovingrerenderentities.get(i).getY());
-            }
-                for (int i = 0; i < nonmovingentities.size(); i++) {
-                    {
-                        for (int j = 0; j < explosionlast.size(); j++) {
-                            if (checkcolision(explosionlast.get(j).getX(), explosionlast.get(j).getY(), nonmovingentities.get(i).getX(), nonmovingentities.get(i).getY()) == true) {
-                                for(int h=0 ;h < nonmovingrerenderentities.size();h++){
-                                    if (nonmovingentities.get(i) == nonmovingrerenderentities.get(h))//xem co bi xac dinh trung doi tuong da co
-                                            isokadd=false;
-                                }
-                                if(isokadd== true)
-                                {
-                                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-                                    if (isokBombEffect[j] == true) nonmovingentities.get(i).setIschange(false);
-                                    if (isokBombEffect[j] == false) nonmovingentities.get(i).setIschange(true);
-                                    isokBombEffect[j] = true;
-                                }
+
+
+            for (int i = 0; i < nonmovingentities.size(); i++) {
+                {
+                    for (int j = 0; j < explosionlast.size(); j++) {
+                        if (checkcolision(explosionlast.get(j).getX(), explosionlast.get(j).getY(), nonmovingentities.get(i).getX(), nonmovingentities.get(i).getY()) == true) {
+                            for (int h = 0; h < nonmovingrerenderentities.size(); h++) {
+                                if (nonmovingentities.get(i) == nonmovingrerenderentities.get(h))//xem co bi xac dinh trung doi tuong da co
+                                    isokadd = false;
                             }
-                            isokadd= true;
+                            if (isokadd == true) {
+                                nonmovingrerenderentities.add(nonmovingentities.get(i));
+                                if (isokBombEffect[j] == true) nonmovingentities.get(i).setIschange(false);
+                                if (isokBombEffect[j] == false) nonmovingentities.get(i).setIschange(true);
+                                isokBombEffect[j] = true;
+                            }
                         }
+                        isokadd = true;
                     }
                 }
+            }
 
 
-
-//
-//            for (int i = 0; i < nonmovingentities.size() - 1; i++) {
-//                if (checkcolison(explosion_horizontal1left.getX(),explosion_horizontal1left.getY(),nonmovingentities.get(i).getX(),nonmovingentities.get(i).getY())== true) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokleft == false) nonmovingentities.get(i).setIschange(true);
-//                    isokleft = true;
-//                }
-//
-//                if (nonmovingentities.get(i).getX() - 1 < explosion_horizontal1right.getX() && nonmovingentities.get(i).getX() >= explosion_horizontal1right.getX() && nonmovingentities.get(i).getY() > explosion_horizontal1right.getY() - 1 && nonmovingentities.get(i).getY() < explosion_horizontal1right.getY() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokright == false) nonmovingentities.get(i).setIschange(true);
-//                    isokright = true;
-//                }
-//
-//                if (nonmovingentities.get(i).getY() == explosion_vertical1top.getY() && nonmovingentities.get(i).getX() > explosion_vertical1top.getX() - 1 && nonmovingentities.get(i).getX() < explosion_vertical1top.getX() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokup == false) nonmovingentities.get(i).setIschange(true);
-//                    isokup = true;
-//                }
-//
-//                if (nonmovingentities.get(i).getY() == explosion_vertical1down.getY() && nonmovingentities.get(i).getX() > explosion_vertical1down.getX() - 1 && nonmovingentities.get(i).getX() < explosion_vertical1down.getX() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokdown == false) nonmovingentities.get(i).setIschange(true);
-//                    isokdown = true;
-//                }
-//            }
-//            for (int i = 0; i < nonmovingentities.size() - 1; i++) {
-//                if (nonmovingentities.get(i).getX() == explosion_horizontalright.getX() && nonmovingentities.get(i).getY() > explosion_horizontalright.getY() - 1 && nonmovingentities.get(i).getY() < explosion_horizontalright.getY() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokright == true) nonmovingentities.get(i).setIschange(false);
-//                    if (isokright == false) nonmovingentities.get(i).setIschange(true);
-//                    isokright = true;
-//                }
-//
-//                if (nonmovingentities.get(i).getX() == explosion_horizontalleft.getX() && nonmovingentities.get(i).getY() > explosion_horizontalleft.getY() - 1 && nonmovingentities.get(i).getY() < explosion_horizontalleft.getY() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokleft == true) nonmovingentities.get(i).setIschange(false);
-//                    if (isokleft == false) nonmovingentities.get(i).setIschange(true);
-//                    isokleft = true;
-//                }
-//
-//                if (nonmovingentities.get(i).getY() == explosion_verticaltop.getY() && nonmovingentities.get(i).getX() > explosion_verticaltop.getX() - 1 && nonmovingentities.get(i).getX() < explosion_verticaltop.getX() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokup == true) nonmovingentities.get(i).setIschange(false);
-//                    if (isokup == false) nonmovingentities.get(i).setIschange(true);
-//                    isokup = true;
-//                }
-//
-//                if (nonmovingentities.get(i).getY() == explosion_verticaldown.getY() && nonmovingentities.get(i).getX() > explosion_verticaldown.getX() - 1 && nonmovingentities.get(i).getX() < explosion_verticaldown.getX() + 1) {
-//                    nonmovingrerenderentities.add(nonmovingentities.get(i));
-//                    if (isokdown == true) nonmovingentities.get(i).setIschange(false);
-//                    if (isokdown == false) nonmovingentities.get(i).setIschange(true);
-//                    isokdown = true;
-//                }
-//            }
-        }
-        System.out.println(nonmovingrerenderentities.size());
-        for (int i=0 ; i< nonmovingrerenderentities.size();i++)
-        {
-            System.out.println(nonmovingrerenderentities.get(i).getX()+" "+nonmovingrerenderentities.get(i).getY());
         }
     }
 
-    public static void checkdeadbybomb(double dx, double dy){
-        for(int i=0;i<movingentities.size();i++){
-
+    public static <bombEffect> void checkdeadbybomb(double dx, double dy) {
+        for (int i = 0; i < movingentities.size(); i++) {
+            if (movingentities.get(i) instanceof Explosion_horizontal == false
+                    && movingentities.get(i) instanceof Explosion_horizontal_left == false
+                    && movingentities.get(i) instanceof Explosion_horizontal_right == false
+                    && movingentities.get(i) instanceof Explosion_vertical == false
+                    && movingentities.get(i) instanceof Explosion_vertical_down == false
+                    && movingentities.get(i) instanceof Explosion_vertical_top == false
+                    && movingentities.get(i) instanceof Bomb == false) {
+                if (checkcolision(dx, dy, movingentities.get(i).getX(), movingentities.get(i).getY()) == true) {
+                    movingentities.get(i).setIsdead(true);
+                }
+            }
         }
 
     }
 
-    public static boolean checkcolision(double x11,double y12, double x21, double y22){
+    public static boolean checkcolision(double x11, double y12, double x21, double y22) {
         double x1 = (double) Math.round(x11 * 100) / 100;
         double y1 = (double) Math.round(y12 * 100) / 100;
         double x2 = (double) Math.round(x21 * 100) / 100;
         double y2 = (double) Math.round(y22 * 100) / 100;
-        if(x2-1<x1 && x2>=x1 && y2+1 >y1 &&y2 <= y1) return true;
-        else if (x2-1<x1 && x2>=x1 && y2 -1 <y1 && y2 >= y1 ) return  true;
-        else if (x2+1 >x1 && x2 <=x1 && y2+1 >y1 &&y2 <= y1)return  true;
-        else if(x2+1 >x1 && x2 <=x1 && y2 -1 <y1 && y2 >= y1) return true;
+        if (x2 - 1 < x1 && x2 >= x1 && y2 + 1 > y1 && y2 <= y1) return true;
+        else if (x2 - 1 < x1 && x2 >= x1 && y2 - 1 < y1 && y2 >= y1) return true;
+        else if (x2 + 1 > x1 && x2 <= x1 && y2 + 1 > y1 && y2 <= y1) return true;
+        else if (x2 + 1 > x1 && x2 <= x1 && y2 - 1 < y1 && y2 >= y1) return true;
         else return false;
     }
 
-    public static void deleteNonmovingentities() {
+    public static void deleteEntities() {
         if (nonmovingrerenderentities != null) {
             for (int i = 0; i < nonmovingrerenderentities.size(); i++) {
                 if (nonmovingrerenderentities.get(i).getImg() == null) {
@@ -403,6 +317,20 @@ public class Map {
                     nonmovingrerenderentities.remove(nonmovingrerenderentities.get(i));
                 }
 
+            }
+        }
+        for (int i = 0; i < movingentities.size(); i++) {
+            if (movingentities.get(i) instanceof Explosion_horizontal == false
+                    && movingentities.get(i) instanceof Explosion_horizontal_left == false
+                    && movingentities.get(i) instanceof Explosion_horizontal_right == false
+                    && movingentities.get(i) instanceof Explosion_vertical == false
+                    && movingentities.get(i) instanceof Explosion_vertical_down == false
+                    && movingentities.get(i) instanceof Explosion_vertical_top == false
+                    && movingentities.get(i) instanceof Bomb == false) {
+                if (movingentities.get(i).getImg() == null) {
+                    movingentities.remove(i);
+                    System.out.println(1);
+                }
             }
         }
 
