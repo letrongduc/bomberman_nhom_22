@@ -1,6 +1,7 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.bombEffect.Explosion_horizontal;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -36,30 +37,6 @@ public class Bomb extends Entity{
         Bomb_exploded.add(Sprite.bomb_exploded1.getFxImage());
         Bomb_exploded.add(Sprite.bomb_exploded2.getFxImage());
 
-        explosion_horizontal.add(Sprite.explosion_horizontal.getFxImage());
-        explosion_horizontal.add(Sprite.explosion_horizontal1.getFxImage());
-        explosion_horizontal.add(Sprite.explosion_horizontal2.getFxImage());
-
-        explosion_horizontal_left.add(Sprite.explosion_horizontal_left_last.getFxImage());
-        explosion_horizontal_left.add(Sprite.explosion_horizontal_left_last1.getFxImage());
-        explosion_horizontal_left.add(Sprite.explosion_horizontal_left_last2.getFxImage());
-
-        explosion_horizontal_right.add(Sprite.explosion_horizontal_right_last.getFxImage());
-        explosion_horizontal_right.add(Sprite.explosion_horizontal_right_last1.getFxImage());
-        explosion_horizontal_right.add(Sprite.explosion_horizontal_right_last2.getFxImage());
-
-        explosion_vertical.add(Sprite.explosion_vertical.getFxImage());
-        explosion_vertical.add(Sprite.explosion_vertical1.getFxImage());
-        explosion_vertical.add(Sprite.explosion_vertical2.getFxImage());
-
-        explosion_vertical_down.add(Sprite.explosion_vertical_down_last.getFxImage());
-        explosion_vertical_down.add(Sprite.explosion_vertical_down_last1.getFxImage());
-        explosion_vertical_down.add(Sprite.explosion_vertical_down_last2.getFxImage());
-
-        explosion_vertical_top.add(Sprite.explosion_vertical_top_last.getFxImage());
-        explosion_vertical_top.add(Sprite.explosion_vertical_top_last1.getFxImage());
-        explosion_vertical_top.add(Sprite.explosion_vertical_top_last2.getFxImage());
-
     }
 
     public Image Bombpreparingexplode(){
@@ -73,23 +50,19 @@ public class Bomb extends Entity{
             else return Bombbig.get(0);
         }
     }
-    public Image explosion_horizontal_exploded(Image img){
-        if(img == explosion_horizontal.get(0) ) return explosion_horizontal.get(1);
-        if(img == explosion_horizontal.get(1) ) return explosion_horizontal.get(2);
-        else return explosion_horizontal.get(0);
-    }
     public Image Bombexploded(){
             if(img==Bomb_exploded.get(0)) return Bomb_exploded.get(1);
             if(img==Bomb_exploded.get(1)) return Bomb_exploded.get(2);
             else return Bomb_exploded.get(0);
     }
     public Image looptime(){
-            if (timedelaycount == 16)
+            if (timedelaycount == 24)
             {
                 //explosion_horizontal1= new Explosion_horizontal(getX()+1,getY(), Sprite.explosion_horizontal.getFxImage());
                 //Map.movingentities.add(explosion_horizontal1);
                 isEnd =true;
                 if(timeexploded != 6){
+                    Map.checkdeadbybomb(this.x,this.y);
                     timeexploded=timeexploded+1;
                      return Bombexploded();
                 }
