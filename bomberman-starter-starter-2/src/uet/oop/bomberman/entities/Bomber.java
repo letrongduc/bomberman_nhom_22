@@ -26,6 +26,7 @@ public class Bomber extends Entity {
 
     private Boolean hold = false;
     private String keymove = "";
+    private int countisdead=0;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -64,6 +65,13 @@ public class Bomber extends Entity {
         this.hold = hold;
     }
 
+    private Image Bomberdead(){
+        if(img==imgdead.get(0)) return imgdead.get(1);
+        else if(img==imgdead.get(1)) return imgdead.get(2);
+        else if(img==imgdead.get(2)) return null;
+        else return imgdead.get(0);
+    }
+
     private Image Bombermoveleft() {
         if (x >0 && Map.checkcollisionmoving(x, y, "Left",0.8,0.25)) x = x - 0.25;
         if (img == imgmoveleft.get(0)) return imgmoveleft.get(1);
@@ -98,9 +106,16 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-        if (keymove == "Right" && hold == true) img = Bombermoveright();
-        if (keymove == "Up" && hold == true) img = Bombermoveup();
-        if (keymove == "Down" && hold == true) img = Bombermovedown();
-        if (keymove == "Left" && hold == true) img = Bombermoveleft();
+        if(isdead== false)
+        {
+            if (keymove == "Right" && hold == true) img = Bombermoveright();
+            if (keymove == "Up" && hold == true) img = Bombermoveup();
+            if (keymove == "Down" && hold == true) img = Bombermovedown();
+            if (keymove == "Left" && hold == true) img = Bombermoveleft();
+        }
+        else {
+            countisdead=countisdead+1;
+            if(countisdead % 4==0)img = Bomberdead();
+        };
     }
 }
