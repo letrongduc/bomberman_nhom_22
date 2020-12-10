@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities.bombEffect;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Map.Map;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
