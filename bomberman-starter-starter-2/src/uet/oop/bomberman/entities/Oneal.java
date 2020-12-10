@@ -15,6 +15,7 @@ public class Oneal extends Entity {
     private List<Image> imgMoveUp=new ArrayList<>();
     private List<Image> imgMoveDown=new ArrayList<>();
     private List<Image> imgDead=new ArrayList<>();
+    private int countisdead=0;
 
     private int MovingLoopindex;
 
@@ -40,10 +41,16 @@ public class Oneal extends Entity {
         imgMoveDown.add(Sprite.oneal_right2.getFxImage());
         imgMoveDown.add(Sprite.oneal_right3.getFxImage());
 
+        imgDead.add(Sprite.oneal_dead.getFxImage());
+
         keymove = "";
         MovingLoopindex = 0;
         speed = 0;
         loop = 0;
+    }
+
+    private Image onealDead(){
+        return imgDead.get(0);
     }
 
     private String getkeymoving() {
@@ -125,6 +132,14 @@ public class Oneal extends Entity {
 
     @Override
     public void update() {
-        MovingLoop();
+        if(isdead==false)
+        {
+            MovingLoop();
+        }
+        else {
+            countisdead=countisdead+1;
+            if(countisdead <=12  ) img = onealDead();
+            else img=null;
+        }
     }
 }
