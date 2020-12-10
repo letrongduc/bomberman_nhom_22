@@ -13,6 +13,7 @@ public class Minvo extends Entity {
     private List<Image> imgMoveUp = new ArrayList<>();
     private List<Image> imgMoveDown = new ArrayList<>();
     private List<Image> imgDead = new ArrayList<>();
+    private  int countisdead=0;
 
     private class toado {
         int x_td;
@@ -60,8 +61,13 @@ public class Minvo extends Entity {
         imgMoveDown.add(Sprite.minvo_right2.getFxImage());
         imgMoveDown.add(Sprite.minvo_right3.getFxImage());
 
+        imgDead.add(Sprite.minvo_dead.getFxImage());
         keymove = "";
         MovingLoopindex = 0;
+    }
+
+    private Image minvoDead(){
+        return imgDead.get(0);
     }
 
     private String getkeymoving() {
@@ -207,6 +213,14 @@ public class Minvo extends Entity {
 
     @Override
     public void update() {
-        MovingLoop();
+        if(isdead==false)
+        {
+            MovingLoop();
+        }
+        else {
+            countisdead=countisdead+1;
+            if(countisdead <=12  ) img = minvoDead();
+            else img=null;
+        }
     }
 }
