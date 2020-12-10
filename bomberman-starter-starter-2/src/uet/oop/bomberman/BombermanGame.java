@@ -2,12 +2,23 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import javafx.animation.Animation;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 import javafx.event.*;
 import javafx.scene.input.KeyEvent;
@@ -19,15 +30,16 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.Map.Map;
 
 import javax.swing.*;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class BombermanGame extends Application {
-
-
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
+
+    public static String bomber = "live";
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -35,11 +47,17 @@ public class BombermanGame extends Application {
     private List<Entity> nonmovingrerenderentities;
     private List<Entity> movingentities=new ArrayList<>();
     private int keyrender=0;
+    Stage window;
+    private Scene scene1;
+    private Scene scene2;
 //    public static Bomber myBomber;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
+    }
 
+    public static void setBomber(String bomber) {
+        BombermanGame.bomber = bomber;
     }
 
     public abstract class AnimationTimerExt extends AnimationTimer {
@@ -69,6 +87,7 @@ public class BombermanGame extends Application {
     }
     @Override
     public void start(Stage stage) {
+        window = stage;
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
         gc = canvas.getGraphicsContext2D();
@@ -77,15 +96,88 @@ public class BombermanGame extends Application {
         Group root = new Group();
         root.getChildren().add(canvas);
 
+        // tao scene menu
+        Image img1 = new Image("file:menu.jpg");
+        ImageView imgv1 = new ImageView(img1);
+        imgv1.setFitHeight(Sprite.SCALED_SIZE * HEIGHT-2);
+        imgv1.setFitWidth(Sprite.SCALED_SIZE * WIDTH-2);
+
+        Label label1 = new Label("Bấm cách để chơi game >.<");
+        label1.setTextFill(Color.WHITE);
+        label1.setFont(new Font("Arial", 30));
+        label1.setTranslateY(Sprite.SCALED_SIZE * HEIGHT-100);
+        label1.setTranslateX((Sprite.SCALED_SIZE * WIDTH-2) / 2 - 180);
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), label1);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.setCycleCount(Animation.INDEFINITE);
+        fadeTransition.play();
+
+        Group layout = new Group();
+        layout.getChildren().addAll(imgv1, label1);
+
+        scene1 = new Scene(layout, Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
+        // Them scene vao stage
+        if(bomber.equals("live")){
+            window.setScene(scene1);
+        }
+//        stage.setResizable(false);
+        window.show();
+
+        //tao scene gameover
+        Image img2 = new Image("file:gameover.jpg");
+        ImageView imgv2 = new ImageView(img2);
+        imgv2.setFitHeight(Sprite.SCALED_SIZE * HEIGHT-2);
+        imgv2.setFitWidth(Sprite.SCALED_SIZE * WIDTH-2);
+
+        Label label2 = new Label("Chơi lại (Y/N)?");
+        label2.setTextFill(Color.WHITE);
+        label2.setFont(new Font("Arial", 20));
+        label2.setTranslateY(100);
+        label2.setTranslateX((Sprite.SCALED_SIZE * WIDTH-2) / 2 - 65);
+
+        Group layout1 = new Group();
+        layout1.getChildren().addAll(imgv2, label2);
+
+        scene2 = new Scene(layout1, Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
+
+//        if(bomber == "died"){
+//            stage.setScene(scene2);
+//        }
+
         // Tao scene
         Scene scene = new Scene(root, Color.GREEN);
-        // Them scene vao stage
-        stage.setScene(scene);
-        stage.show();
 
         new Map();
 //        myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
 //        myMap.movingentities.add(myBomber);
+
+        scene1.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(javafx.scene.input.KeyEvent event) {
+                switch (event.getCode()) {
+                    case SPACE:
+                        window.setScene(scene);
+                        break;
+                }
+            }
+        });
+
+        scene2.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(javafx.scene.input.KeyEvent event) {
+                switch (event.getCode()) {
+                    case Y:
+                        window.close();
+                        bomber = "live";
+                        break;
+                    case N:
+                        System.exit(0);
+                        break;
+                }
+            }
+        });
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -136,6 +228,9 @@ public class BombermanGame extends Application {
                 update();
                 render();
                 Map.deleteEntities();
+                if(bomber == "died"){
+                    window.setScene(scene2);
+                }
             }
         };
         timer.start();

@@ -114,8 +114,14 @@ public class Bomber extends Entity {
             if (keymove == "Left" && hold == true) img = Bombermoveleft();
         }
         else {
+            System.out.println(countisdead);
             countisdead=countisdead+1;
-            if(countisdead % 4==0)img = Bomberdead();
+            if(countisdead % 4==0){
+                img = Bomberdead();
+            }
+            if(countisdead == 16){
+                BombermanGame.setBomber("died");
+            }
         };
     }
 }
