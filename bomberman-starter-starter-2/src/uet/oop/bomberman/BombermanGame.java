@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 
 import javafx.event.*;
 import javafx.scene.input.KeyEvent;
@@ -31,6 +34,8 @@ import uet.oop.bomberman.Map.Map;
 
 import javax.swing.*;
 import javax.xml.bind.annotation.XmlType;
+import java.applet.AudioClip;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +46,15 @@ public class BombermanGame extends Application {
 
     public static String bomber = "live";
 
+    public static MediaPlayer mediaBackgroundPlayer =
+            new MediaPlayer(new Media(new File("sounds/background.wav").toURI().toString()));
+    public static MediaPlayer mediaMenuPlayer =
+            new MediaPlayer(new Media(new File("sounds/menumusic.wav").toURI().toString()));
+    public static MediaPlayer mediaExplosionPlayer =
+            new MediaPlayer(new Media(new File("sounds/explosion.wav").toURI().toString()));
+    public static MediaPlayer mediaLosePlayer =
+            new MediaPlayer(new Media(new File("sounds/lose.wav").toURI().toString()));
+
     private GraphicsContext gc;
     private Canvas canvas;
     private List<Entity> nonmovingentities;
@@ -50,6 +64,8 @@ public class BombermanGame extends Application {
     Stage window;
     private Scene scene1;
     private Scene scene2;
+
+
 //    public static Bomber myBomber;
 
     public static void main(String[] args) {
@@ -87,6 +103,16 @@ public class BombermanGame extends Application {
     }
     @Override
     public void start(Stage stage) {
+        mediaMenuPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaMenuPlayer.seek(Duration.ZERO);
+            }
+        });
+        mediaBackgroundPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaBackgroundPlayer.seek(Duration.ZERO);
+            }
+        });
         window = stage;
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
@@ -121,6 +147,7 @@ public class BombermanGame extends Application {
         // Them scene vao stage
         if(bomber.equals("live")){
             window.setScene(scene1);
+            mediaMenuPlayer.play();
         }
 //        stage.setResizable(false);
         window.show();
@@ -159,6 +186,8 @@ public class BombermanGame extends Application {
                 switch (event.getCode()) {
                     case SPACE:
                         window.setScene(scene);
+                        mediaMenuPlayer.stop();
+                        mediaBackgroundPlayer.play();
                         break;
                 }
             }
@@ -230,6 +259,7 @@ public class BombermanGame extends Application {
                 Map.deleteEntities();
                 if(bomber == "died"){
                     window.setScene(scene2);
+                    mediaBackgroundPlayer.stop();
                 }
             }
         };
