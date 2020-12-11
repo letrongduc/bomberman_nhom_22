@@ -114,7 +114,7 @@ public class Bomber extends Entity {
             if (keymove == "Left" && hold == true) img = Bombermoveleft();
         }
         else {
-            System.out.println(countisdead);
+            BombermanGame.mediaLosePlayer.play();
             countisdead=countisdead+1;
             if(countisdead % 4==0){
                 img = Bomberdead();
