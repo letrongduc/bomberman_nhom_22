@@ -46,6 +46,7 @@ public class BombermanGame extends Application {
     private List<Entity> nonmovingentities;
     private List<Entity> nonmovingrerenderentities;
     private List<Entity> movingentities=new ArrayList<>();
+    private List<Entity> item;
     private int keyrender=0;
     Stage window;
     private Scene scene1;
@@ -236,10 +237,13 @@ public class BombermanGame extends Application {
         timer.start();
     }
     public void removerender(){
-        if(movingentities.size()!=0)
-        for(int i=0;i<movingentities.size();i++){
+        if(movingentities!= null)
+        {
+            if (movingentities.size() != 0)
+                for (int i = 0; i < movingentities.size(); i++) {
 //            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
-            gc.clearRect(32*movingentities.get(i).getX(), 32*movingentities.get(i).getY(), 32, 32);
+                    gc.clearRect(32 * movingentities.get(i).getX(), 32 * movingentities.get(i).getY(), 32, 32);
+                }
         }
         if(nonmovingrerenderentities!= null) {
             if (nonmovingrerenderentities.size() != 0)
@@ -252,26 +256,32 @@ public class BombermanGame extends Application {
                     }
                 }
         }
+        if(item!=null){
+            for(int i=0;i<item.size();i++){
+                if (item.get(i).isIschange()== true){
+                    gc.clearRect(32 * item.get(i).getX(), 32 * item.get(i).getY(), 32, 32);
+                }
+            }
+        }
     }
     public void update() {
         nonmovingentities = Map.nonmovingentities;
         nonmovingrerenderentities=Map.nonmovingrerenderentities;
         movingentities = Map.movingentities;
+        item=Map.item;
         nonmovingentities.forEach(Entity::update);
         nonmovingrerenderentities.forEach(Entity::update);
         movingentities.forEach(Entity::update);
+        item.forEach(Entity::update);
     }
 
     public void render() {
-//        for(int i=0;i<movingentities.size();i++){
-//            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
-//            gc.clearRect(movingentities.get(i).getX(), movingentities.get(i).getY(), 32, 32);
-//        }
         if(keyrender == 0) {
             nonmovingentities.forEach(g -> g.render(gc));
             keyrender=keyrender+1;
         }
         if (nonmovingrerenderentities != null) nonmovingrerenderentities.forEach(g -> g.render(gc));
+        if(item != null) item.forEach(g -> g.render(gc));
         movingentities.forEach(g -> g.render(gc));
     }
 }
