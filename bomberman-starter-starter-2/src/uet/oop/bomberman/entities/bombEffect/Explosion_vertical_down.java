@@ -25,7 +25,7 @@ public class Explosion_vertical_down extends bombEffect {
     @Override
     public void update() {
         if(Map.bomb.isEnd == true) {
-            if(Map.isokBombEffect[3]== false)Map.checkdeadbybomb(this.x,this.y);
+            if(Map.isokBombEffect[3]!=1 &&Map.isokBombEffect[3]!=2)Map.checkdeadbybomb(this.x,this.y);
             img = explosion_vertical_down();
         }
         else {

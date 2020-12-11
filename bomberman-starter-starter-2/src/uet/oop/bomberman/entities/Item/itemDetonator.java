@@ -1,12 +1,10 @@
 package uet.oop.bomberman.entities.Item;
 
+import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 
-import javafx.scene.image.Image;
-
-public class itemSpeedup extends Entity {
-
-    public itemSpeedup(double x, double y, Image img)
+public class itemDetonator extends Entity {
+    public itemDetonator(double x, double y, Image img)
     {
         super(x,y,img);
     }

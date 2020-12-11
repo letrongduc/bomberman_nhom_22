@@ -13,7 +13,7 @@ public class Bomb extends Entity{
     private List<Image> Bombsmall = new ArrayList<>();
     private List<Image> Bombbig = new ArrayList<>();
     private List<Image> Bomb_exploded =new ArrayList<>();
-    public static int idbomb=2;
+    public static int idbomb=1;
     static public boolean isexploded=false;
     private int timedelaycount =0;
     private int timeexploded=0;

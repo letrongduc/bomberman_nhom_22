@@ -32,6 +32,14 @@ public class Sprite {
 
 	/*
 	|--------------------------------------------------------------------------
+	| Item sprites
+	|--------------------------------------------------------------------------
+	 */
+	public static Sprite itemSpeedup=new Sprite(DEFAULT_SIZE,2,10,SpriteSheet.tiles,16,16);
+	public static Sprite itemDetonator=new Sprite(DEFAULT_SIZE,4,10,SpriteSheet.tiles,16,16);
+	public static Sprite itemBigbomb=new Sprite(DEFAULT_SIZE,0,10,SpriteSheet.tiles,16,16);
+	/*
+	|--------------------------------------------------------------------------
 	| Bomber Sprites
 	|--------------------------------------------------------------------------
 	 */
