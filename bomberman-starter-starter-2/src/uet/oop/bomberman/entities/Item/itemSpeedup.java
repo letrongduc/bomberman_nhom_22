@@ -6,12 +6,19 @@ import javafx.scene.image.Image;
 
 public class itemSpeedup extends Entity {
 
-    public itemSpeedup(int x, int y, Image img)
+    public itemSpeedup(double x, double y, Image img)
     {
         super(x,y,img);
     }
     @Override
-    public void update() {
+    public void setIschange(boolean ischange) {
+        super.setIschange(ischange);
+    }
 
+    @Override
+    public void update() {
+        if(ischange== false){
+            img=null;
+        }
     }
 }
