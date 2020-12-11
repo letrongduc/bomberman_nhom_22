@@ -1,12 +1,14 @@
 package uet.oop.bomberman.entities;
 
 import javafx.scene.image.Image;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.bombEffect.Explosion_horizontal;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.util.Duration;
 public class Bomb extends Entity{
     private List<Image> Bombsmall = new ArrayList<>();
     private List<Image> Bombbig = new ArrayList<>();
@@ -68,8 +70,13 @@ public class Bomb extends Entity{
                 }
             }
             else {
+                if(timedelaycount == 23){
+                    BombermanGame.mediaExplosionPlayer.play();
+                }
                 timedelaycount=timedelaycount+1;
-                if(timedelaycount % 2 == 0 ) return Bombpreparingexplode();
+                if(timedelaycount % 2 == 0 ){
+                    return Bombpreparingexplode();
+                }
                 else return img;
             }
     }
