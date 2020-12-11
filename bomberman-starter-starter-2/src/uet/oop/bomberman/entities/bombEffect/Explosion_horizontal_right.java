@@ -24,7 +24,7 @@ public class Explosion_horizontal_right extends bombEffect {
     @Override
     public void update() {
         if(Map.bomb.isEnd == true) {
-            if(Map.isokBombEffect[1]== false)Map.checkdeadbybomb(this.x,this.y);
+            if(Map.isokBombEffect[1]!=1 &&Map.isokBombEffect[1]!=2)Map.checkdeadbybomb(this.x,this.y);
             img = explosion_horizontal_right();
         }
         else {
