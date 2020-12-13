@@ -35,7 +35,7 @@ public class Map {
 
  //   public static int counttime = 0;
     public static Bomber myBomber;
-    public static int Bomberlife=1;
+    public static int Bomberlife=3;
 
     public static MediaPlayer mediaBackgroundPlayer =
             new MediaPlayer(new Media(new File("sounds/background.wav").toURI().toString()));
@@ -454,7 +454,10 @@ public class Map {
                     if(movingentities.get(i)==myBomber){
                         movingentities.remove(i);
                         Bomberlife=Bomberlife-1;
-                        if(Bomberlife>0) myBomber= new Bomber(0,0, Sprite.player_right.getFxImage());
+                        if(Bomberlife>0) {
+                            myBomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
+                            movingentities.add(myBomber);
+                        }
                     }
                     else {
                         createItem(movingentities.get(i).getX(), movingentities.get(i).getY());
