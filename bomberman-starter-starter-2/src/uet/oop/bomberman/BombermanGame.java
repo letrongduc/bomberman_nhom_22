@@ -47,13 +47,14 @@ public class BombermanGame extends Application {
 
     public static String bomber = "live";
 
+    private GraphicsContext gc;
+    private Canvas canvas;
 
     public static MediaPlayer mediaMenuPlayer =
             new MediaPlayer(new Media(new File("sounds/menumusic.wav").toURI().toString()));
 
 
-    private GraphicsContext gc;
-    private Canvas canvas;
+
     private List<Entity> nonmovingentities;
     private List<Entity> nonmovingrerenderentities;
     private List<Entity> movingentities=new ArrayList<>();
@@ -108,13 +109,6 @@ public class BombermanGame extends Application {
         });
 
         window = stage;
-        // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
-        gc = canvas.getGraphicsContext2D();
-
-        // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
 
         // tao scene menu
         Image img1 = new Image("file:menu.jpg");
@@ -168,10 +162,9 @@ public class BombermanGame extends Application {
 //            stage.setScene(scene2);
 //        }
 
-        // Tao scene
-        Scene scene = new Scene(root, Color.GREEN);
 
-        new Map("res/levels/Level1.txt");
+
+
 //        myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
 //        myMap.movingentities.add(myBomber);
 
@@ -180,13 +173,65 @@ public class BombermanGame extends Application {
             public void handle(javafx.scene.input.KeyEvent event) {
                 switch (event.getCode()) {
                     case SPACE:
+                        try {
+                            new Map("res/levels/Level1.txt");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        // Tao Canvas
+                        canvas = new Canvas(Sprite.SCALED_SIZE * Map.ngang-2, Sprite.SCALED_SIZE * Map.doc-2);
+                        gc = canvas.getGraphicsContext2D();
+
+                        // Tao root container
+                        Group root = new Group();
+                        root.getChildren().add(canvas);
+
+                        // Tao scene
+                        Scene scene = new Scene(root, Color.GREEN);
                         window.setScene(scene);
+                        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(javafx.scene.input.KeyEvent event) {
+                                switch (event.getCode()) {
+                                    case UP:
+                                        Map.myBomber.setHold(true);
+                                        Map.myBomber.setKeymove("Up");
+                                        break;
+                                    case DOWN:
+                                        Map.myBomber.setHold(true);
+                                        Map.myBomber.setKeymove("Down");
+                                        break;
+                                    case LEFT:
+                                        Map.myBomber.setHold(true);
+                                        Map.myBomber.setKeymove("Left");
+                                        break;
+                                    case RIGHT:
+                                        Map.myBomber.setHold(true);
+                                        Map.myBomber.setKeymove("Right");
+                                        break;
+                                    case SPACE:
+                                        Map.startbomb();
+                                        break;
+                                }
+                            }
+                        });
+
+                        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+                            @Override
+                            public void handle(KeyEvent event) {
+                                switch (event.getCode()) {
+                                    case UP:
+                                        Map.myBomber.setHold(false);
+                                    case DOWN:
+                                        Map.myBomber.setHold(false);
+                                    case LEFT:
+                                        Map.myBomber.setHold(false);
+                                    case RIGHT:
+                                        Map.myBomber.setHold(false);
+                                }
+                            }
+                        });
                         mediaMenuPlayer.stop();
-//                        try {
-//                            new Map("res/levels/Level1.txt");
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
                         Map.mediaBackgroundPlayer.play();
                         break;
                 }
@@ -209,48 +254,7 @@ public class BombermanGame extends Application {
             }
         });
 
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(javafx.scene.input.KeyEvent event) {
-                switch (event.getCode()) {
-                    case UP:
-                        Map.myBomber.setHold(true);
-                        Map.myBomber.setKeymove("Up");
-                        break;
-                    case DOWN:
-                        Map.myBomber.setHold(true);
-                        Map.myBomber.setKeymove("Down");
-                        break;
-                    case LEFT:
-                        Map.myBomber.setHold(true);
-                        Map.myBomber.setKeymove("Left");
-                        break;
-                    case RIGHT:
-                        Map.myBomber.setHold(true);
-                        Map.myBomber.setKeymove("Right");
-                        break;
-                    case SPACE:
-                        Map.startbomb();
-                        break;
-                }
-            }
-        });
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()) {
-                    case UP:
-                        Map.myBomber.setHold(false);
-                    case DOWN:
-                        Map.myBomber.setHold(false);
-                    case LEFT:
-                        Map.myBomber.setHold(false);
-                    case RIGHT:
-                        Map.myBomber.setHold(false);
-                }
-            }
-        });
         AnimationTimerExt timer = new AnimationTimerExt(100) {
             @Override
             public void handle() {
