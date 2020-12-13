@@ -127,9 +127,6 @@ public class Map {
                         || (nonmovingentities.get(i).getY() > y && nonmovingentities.get(i).getY() < y + 1 && nonmovingentities.get(i).getX() > x)
                         || (nonmovingentities.get(i).getY() == y && nonmovingentities.get(i).getX() > x)) {
                     if (Distance > nonmovingentities.get(i).getX()) {
-                        System.out.println(Distance);
-                        System.out.println(nonmovingentities.get(i).getX());
-                        System.out.println();
                         return false;
                     }
                 }
