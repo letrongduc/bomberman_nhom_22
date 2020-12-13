@@ -173,6 +173,7 @@ public class BombermanGame extends Application {
             public void handle(javafx.scene.input.KeyEvent event) {
                 switch (event.getCode()) {
                     case SPACE:
+                        keyrender++;
                         try {
                             new Map("res/levels/Level1.txt");
                         } catch (IOException e) {
@@ -317,7 +318,9 @@ public class BombermanGame extends Application {
     }
 
     public void render() {
-        if(keyrender == 0) {
+        System.out.println(keyrender);
+        if(keyrender == 1) {
+            System.out.println("ok");
             nonmovingentities.forEach(g -> g.render(gc));
             keyrender=keyrender+1;
         }
