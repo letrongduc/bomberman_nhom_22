@@ -36,6 +36,7 @@ import javax.swing.*;
 import javax.xml.bind.annotation.XmlType;
 import java.applet.AudioClip;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,14 +47,10 @@ public class BombermanGame extends Application {
 
     public static String bomber = "live";
 
-    public static MediaPlayer mediaBackgroundPlayer =
-            new MediaPlayer(new Media(new File("sounds/background.wav").toURI().toString()));
+
     public static MediaPlayer mediaMenuPlayer =
             new MediaPlayer(new Media(new File("sounds/menumusic.wav").toURI().toString()));
-    public static MediaPlayer mediaExplosionPlayer =
-            new MediaPlayer(new Media(new File("sounds/explosion.wav").toURI().toString()));
-    public static MediaPlayer mediaLosePlayer =
-            new MediaPlayer(new Media(new File("sounds/lose.wav").toURI().toString()));
+
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -62,7 +59,7 @@ public class BombermanGame extends Application {
     private List<Entity> movingentities=new ArrayList<>();
     private List<Entity> item;
     private int keyrender=0;
-    Stage window;
+    private Stage window;
     private Scene scene1;
     private Scene scene2;
 
@@ -103,17 +100,13 @@ public class BombermanGame extends Application {
 
     }
     @Override
-    public void start(Stage stage) {
+    public void start(Stage stage) throws IOException {
         mediaMenuPlayer.setOnEndOfMedia(new Runnable() {
             public void run() {
                 mediaMenuPlayer.seek(Duration.ZERO);
             }
         });
-        mediaBackgroundPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                mediaBackgroundPlayer.seek(Duration.ZERO);
-            }
-        });
+
         window = stage;
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
@@ -151,6 +144,7 @@ public class BombermanGame extends Application {
             mediaMenuPlayer.play();
         }
 //        stage.setResizable(false);
+        window.setTitle("game");
         window.show();
 
         //tao scene gameover
@@ -177,7 +171,7 @@ public class BombermanGame extends Application {
         // Tao scene
         Scene scene = new Scene(root, Color.GREEN);
 
-        new Map();
+        new Map("res/levels/Level1.txt");
 //        myBomber = new Bomber(myMap.bomberX, myMap.bomberY, Sprite.player_right.getFxImage());
 //        myMap.movingentities.add(myBomber);
 
@@ -188,7 +182,12 @@ public class BombermanGame extends Application {
                     case SPACE:
                         window.setScene(scene);
                         mediaMenuPlayer.stop();
-                        mediaBackgroundPlayer.play();
+//                        try {
+//                            new Map("res/levels/Level1.txt");
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+                        Map.mediaBackgroundPlayer.play();
                         break;
                 }
             }
@@ -199,7 +198,8 @@ public class BombermanGame extends Application {
             public void handle(javafx.scene.input.KeyEvent event) {
                 switch (event.getCode()) {
                     case Y:
-                        window.close();
+//                        window.close();
+                        window.setScene(scene1);
                         bomber = "live";
                         break;
                     case N:
@@ -258,9 +258,16 @@ public class BombermanGame extends Application {
                 update();
                 render();
                 Map.deleteEntities();
-                if(bomber == "died"){
+                if(Map.Bomberlife == 0){
                     window.setScene(scene2);
-                    mediaBackgroundPlayer.stop();
+                    Map.mediaBackgroundPlayer.stop();
+                }
+                if (Map.Bomberlife == 3){
+                    window.setTitle("live: ♥ ♥ ♥");
+                } else if(Map.Bomberlife == 2){
+                    window.setTitle("live: ♥ ♥");
+                } else if (Map.Bomberlife == 1){
+                    window.setTitle("live: ♥");
                 }
             }
         };

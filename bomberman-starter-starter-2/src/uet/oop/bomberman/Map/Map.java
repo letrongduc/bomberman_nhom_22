@@ -1,5 +1,8 @@
 package uet.oop.bomberman.Map;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Item.itemBigbomb;
 import uet.oop.bomberman.entities.Item.itemDetonator;
@@ -7,9 +10,13 @@ import uet.oop.bomberman.entities.Item.itemSpeedup;
 import uet.oop.bomberman.entities.bombEffect.*;
 import uet.oop.bomberman.graphics.Sprite;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Map {
     public static List<Entity> nonmovingentities = new ArrayList<>();
@@ -28,22 +35,52 @@ public class Map {
 
  //   public static int counttime = 0;
     public static Bomber myBomber;
-    public static int Bomberlife=3;
+    public static int Bomberlife=1;
 
-    public Map() {
-        area.add("###############################");
-        area.add("#      ** *    * 2 *  * * *  3#");
-        area.add("# # # #*# # #*#*# # # #*#*#*# #");
-        area.add("#  **     ***  *      * 2 * * #");
-        area.add("# # # # # #*# # #*#*# # # # #*#");
-        area.add("#*           **  *  *        1#");
-        area.add("# # # # # # # # # #*# #*# # # #");
-        area.add("#*  * 1    *  *               #");
-        area.add("# # # # #*# # # #*#*# # # # # #");
-        area.add("#*    **  *       *           #");
-        area.add("# #*# # # # # # #*# # # # # # #");
-        area.add("#    p      *   *  *          #");
-        area.add("###############################");
+    public static MediaPlayer mediaBackgroundPlayer =
+            new MediaPlayer(new Media(new File("sounds/background.wav").toURI().toString()));
+
+    public static MediaPlayer mediaLosePlayer =
+            new MediaPlayer(new Media(new File("sounds/lose.wav").toURI().toString()));
+
+    public ArrayList readMap(String path) throws IOException {
+        Scanner scanner = new Scanner(Paths.get(path), "UTF-8");
+        int level = scanner.nextInt();
+        int doc = scanner.nextInt();
+        int ngang = scanner.nextInt();
+        scanner.nextLine();
+        ArrayList<String> area = new ArrayList<>();
+        for (int i = 0; i < 13; i++) {
+            String lineData = scanner.nextLine();
+            area.add(lineData);
+        }
+        scanner.close();
+        return area;
+    }
+
+    public Map(String path) throws IOException {
+//        area.add("###############################");
+//        area.add("#      ** *    * 2 *  * * *  3#");
+//        area.add("# # # #*# # #*#*# # # #*#*#*# #");
+//        area.add("#  **     ***  *      * 2 * * #");
+//        area.add("# # # # # #*# # #*#*# # # # #*#");
+//        area.add("#*           **  *  *        1#");
+//        area.add("# # # # # # # # # #*# #*# # # #");
+//        area.add("#*  * 1    *  *               #");
+//        area.add("# # # # #*# # # #*#*# # # # # #");
+//        area.add("#*    **  *       *           #");
+//        area.add("# #*# # # # # # #*# # # # # # #");
+//        area.add("#    p      *   *  *          #");
+//        area.add("###############################");
+        area = readMap(path);
+
+        mediaBackgroundPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                mediaBackgroundPlayer.seek(Duration.ZERO);
+            }
+        });
+
+//        Map.mediaBackgroundPlayer.play();
 
         for (int i = 0; i < area.size(); i++) {
             for (int j = 0; j < area.get(1).length(); j++) {
