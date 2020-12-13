@@ -1,7 +1,12 @@
 package uet.oop.bomberman.Map;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Item.itemBigbomb;
@@ -26,6 +31,10 @@ public class Map {
     public static ArrayList<String> area = new ArrayList<>();
     public static Bomb bomb;
 
+    private int level;
+    public static int doc;
+    public static int ngang;
+
     public static List<Entity> explosion1 = new ArrayList<>();
     public static List<Entity> explosion2 = new ArrayList<>();
     public static List<Entity> explosionlast = new ArrayList<>();
@@ -45,9 +54,9 @@ public class Map {
 
     public ArrayList readMap(String path) throws IOException {
         Scanner scanner = new Scanner(Paths.get(path), "UTF-8");
-        int level = scanner.nextInt();
-        int doc = scanner.nextInt();
-        int ngang = scanner.nextInt();
+        level = scanner.nextInt();
+        doc = scanner.nextInt();
+        ngang = scanner.nextInt();
         scanner.nextLine();
         ArrayList<String> area = new ArrayList<>();
         for (int i = 0; i < 13; i++) {
@@ -79,6 +88,7 @@ public class Map {
                 mediaBackgroundPlayer.seek(Duration.ZERO);
             }
         });
+
 
 //        Map.mediaBackgroundPlayer.play();
 

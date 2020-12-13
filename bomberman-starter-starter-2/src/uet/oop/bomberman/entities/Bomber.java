@@ -4,7 +4,10 @@ import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.Map.Map;
@@ -12,12 +15,11 @@ import uet.oop.bomberman.Map.Map;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Bomber extends Entity {
-
-
     private List<Image> imgmoveleft = new ArrayList<>();
     private List<Image> imgmoveright = new ArrayList<>();
     private List<Image> imgmoveup = new ArrayList<>();
@@ -30,6 +32,8 @@ public class Bomber extends Entity {
 
     private double movedistance=0.25;
 
+    public static MediaPlayer moveBackgroundPlayer =
+            new MediaPlayer(new Media(new File("sounds/move.wav").toURI().toString()));
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -54,6 +58,11 @@ public class Bomber extends Entity {
         imgdead.add(Sprite.player_dead2.getFxImage());
         imgdead.add(Sprite.player_dead3.getFxImage());
 
+        moveBackgroundPlayer.setOnEndOfMedia(new Runnable() {
+            public void run() {
+                moveBackgroundPlayer.seek(Duration.ZERO);
+            }
+        });
     }
 
     public String getKeymove() {
@@ -121,6 +130,12 @@ public class Bomber extends Entity {
     public void update() {
         if(isdead== false)
         {
+            if (hold == true){
+                moveBackgroundPlayer.play();
+            }
+            if (hold == false){
+                moveBackgroundPlayer.stop();
+            }
             if (keymove == "Right" && hold == true) img = Bombermoveright();
             if (keymove == "Up" && hold == true) img = Bombermoveup();
             if (keymove == "Down" && hold == true) img = Bombermovedown();
