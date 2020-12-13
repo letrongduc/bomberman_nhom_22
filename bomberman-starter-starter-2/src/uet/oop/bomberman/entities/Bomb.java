@@ -78,7 +78,6 @@ public class Bomb extends Entity{
                 }
             }
             else {
-                System.out.println(timedelaycount);
                 if(timedelaycount == 23){
                     mediaExplosionPlayer.play();
                 }
