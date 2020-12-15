@@ -26,14 +26,12 @@ public class Bomber extends Entity {
     private List<Image> imgmovedown = new ArrayList<>();
     private List<Image> imgdead = new ArrayList<>();
 
+
     private Boolean hold = false;
     private String keymove = "";
     private int countisdead=0;
 
     private double movedistance=0.25;
-
-    public static MediaPlayer moveBackgroundPlayer =
-            new MediaPlayer(new Media(new File("sounds/move.wav").toURI().toString()));
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -57,12 +55,6 @@ public class Bomber extends Entity {
         imgdead.add(Sprite.player_dead1.getFxImage());
         imgdead.add(Sprite.player_dead2.getFxImage());
         imgdead.add(Sprite.player_dead3.getFxImage());
-
-        moveBackgroundPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                moveBackgroundPlayer.seek(Duration.ZERO);
-            }
-        });
     }
 
     public String getKeymove() {
@@ -130,19 +122,13 @@ public class Bomber extends Entity {
     public void update() {
         if(isdead== false)
         {
-            if (hold == true){
-                moveBackgroundPlayer.play();
-            }
-            if (hold == false){
-                moveBackgroundPlayer.stop();
-            }
             if (keymove == "Right" && hold == true) img = Bombermoveright();
             if (keymove == "Up" && hold == true) img = Bombermoveup();
             if (keymove == "Down" && hold == true) img = Bombermovedown();
             if (keymove == "Left" && hold == true) img = Bombermoveleft();
         }
         else {
-            Map.mediaLosePlayer.play();
+
             countisdead=countisdead+1;
             if(countisdead % 4==0){
                 img = Bomberdead();

@@ -62,8 +62,6 @@ public class Bomb extends Entity{
             if (timedelaycount == 24)
             {
                 mediaExplosionPlayer.stop();
-                //explosion_horizontal1= new Explosion_horizontal(getX()+1,getY(), Sprite.explosion_horizontal.getFxImage());
-                //Map.movingentities.add(explosion_horizontal1);
                 isEnd =true;
                 if(timeexploded != 6){
                     Map.checkdeadbybomb(this.x,this.y);
@@ -82,9 +80,6 @@ public class Bomb extends Entity{
                     mediaExplosionPlayer.play();
                 }
                 timedelaycount=timedelaycount+1;
-//                if(timedelaycount == 24){
-//                    BombermanGame.mediaExplosionPlayer.stop();
-//                }
 
                 if(timedelaycount % 2 == 0 ){
                     return Bombpreparingexplode();

@@ -1,13 +1,17 @@
 package uet.oop.bomberman.Map;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.*;
 import uet.oop.bomberman.entities.Item.itemBigbomb;
 import uet.oop.bomberman.entities.Item.itemDetonator;
@@ -24,33 +28,45 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Map {
-    public static List<Entity> nonmovingentities = new ArrayList<>();
-    public static List<Entity> nonmovingrerenderentities = new ArrayList<>();
-    public static List<Entity> movingentities = new ArrayList<>();
-    public static List<Entity> item= new ArrayList<>();
-    public static ArrayList<String> area = new ArrayList<>();
+    public static Map map;
+    public static List<Entity> nonmovingentities ;
+    public static List<Entity> nonmovingrerenderentities;
+    public static List<Entity> movingentities ;
+    public static List<Entity> item;
+    private static ArrayList<String> area ;
     public static Bomb bomb;
-
-    private int level;
+//    private static GraphicsContext gc;
+    public static Canvas canvas;
+    public static int level;
     public static int doc;
     public static int ngang;
+    public static MediaPlayer mediaLosePlayer =
+            new MediaPlayer(new Media(new File("sounds/lose.wav").toURI().toString()));
 
-    public static List<Entity> explosion1 = new ArrayList<>();
-    public static List<Entity> explosion2 = new ArrayList<>();
-    public static List<Entity> explosionlast = new ArrayList<>();
+    public static List<Entity> explosion1;
+    public static List<Entity> explosion2;
+    public static List<Entity> explosionlast;
 
-    public static int[] isokBombEffect = new int[4];
-    public static boolean isokadd = true;
+    public static int[] isokBombEffect;
+    public static boolean isokadd;
 
  //   public static int counttime = 0;
     public static Bomber myBomber;
-    public static int Bomberlife=3;
+    public static int Bomberlife;
+
 
     public static MediaPlayer mediaBackgroundPlayer =
             new MediaPlayer(new Media(new File("sounds/background.wav").toURI().toString()));
 
-    public static MediaPlayer mediaLosePlayer =
-            new MediaPlayer(new Media(new File("sounds/lose.wav").toURI().toString()));
+
+
+//    public static GraphicsContext getGc() {
+//        return gc;
+//    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
 
     public ArrayList readMap(String path) throws IOException {
         Scanner scanner = new Scanner(Paths.get(path), "UTF-8");
@@ -68,19 +84,22 @@ public class Map {
     }
 
     public Map(String path) throws IOException {
-//        area.add("###############################");
-//        area.add("#      ** *    * 2 *  * * *  3#");
-//        area.add("# # # #*# # #*#*# # # #*#*#*# #");
-//        area.add("#  **     ***  *      * 2 * * #");
-//        area.add("# # # # # #*# # #*#*# # # # #*#");
-//        area.add("#*           **  *  *        1#");
-//        area.add("# # # # # # # # # #*# #*# # # #");
-//        area.add("#*  * 1    *  *               #");
-//        area.add("# # # # #*# # # #*#*# # # # # #");
-//        area.add("#*    **  *       *           #");
-//        area.add("# #*# # # # # # #*# # # # # # #");
-//        area.add("#    p      *   *  *          #");
-//        area.add("###############################");
+         nonmovingentities = new ArrayList<>();
+         nonmovingrerenderentities = new ArrayList<>();
+        movingentities = new ArrayList<>();
+         item= new ArrayList<>();
+         area = new ArrayList<>();
+
+         explosion1 = new ArrayList<>();
+         explosion2 = new ArrayList<>();
+         explosionlast = new ArrayList<>();
+
+         isokBombEffect = new int[4];
+         isokadd = true;
+
+         Bomberlife=1;
+
+        mediaBackgroundPlayer.play();
         area = readMap(path);
 
         mediaBackgroundPlayer.setOnEndOfMedia(new Runnable() {
@@ -88,9 +107,62 @@ public class Map {
                 mediaBackgroundPlayer.seek(Duration.ZERO);
             }
         });
-
-
 //        Map.mediaBackgroundPlayer.play();
+
+        // Tao Canvas
+        canvas = new Canvas(Sprite.SCALED_SIZE * Map.ngang-2, Sprite.SCALED_SIZE * Map.doc-2);
+        BombermanGame.gc = canvas.getGraphicsContext2D();
+        System.out.println("gc da chay");
+        // Tao root container
+        Group root = new Group();
+        root.getChildren().add(canvas);
+
+        // Tao scene
+        Scene scene = new Scene(root, Color.GREEN);
+        BombermanGame.window.setScene(scene);
+        System.out.println("window da chay");
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(javafx.scene.input.KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Up");
+                        break;
+                    case DOWN:
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Down");
+                        break;
+                    case LEFT:
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Left");
+                        break;
+                    case RIGHT:
+                        Map.myBomber.setHold(true);
+                        Map.myBomber.setKeymove("Right");
+                        break;
+                    case SPACE:
+                        Map.startbomb();
+                        break;
+                }
+            }
+        });
+
+        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                    case UP:
+                        Map.myBomber.setHold(false);
+                    case DOWN:
+                        Map.myBomber.setHold(false);
+                    case LEFT:
+                        Map.myBomber.setHold(false);
+                    case RIGHT:
+                        Map.myBomber.setHold(false);
+                }
+            }
+        });
 
         for (int i = 0; i < area.size(); i++) {
             for (int j = 0; j < area.get(1).length(); j++) {
@@ -214,14 +286,8 @@ public class Map {
 
     public static int[][] duyetMap() {
         int[][] check = new int[area.size()][area.get(1).length()];
-        for (int i = 0; i < area.size(); i++) {
-            for (int j = 0; j < area.get(1).length(); j++) {
-                if (area.get(i).charAt(j) == '*' || area.get(i).charAt(j) == '#') {
-                    check[i][j] = 1;
-                } else {
-                    check[i][j] = 0;
-                }
-            }
+        for(int i=0;i< nonmovingentities.size();i++){
+            check[(int)nonmovingentities.get(i).getY()][(int)nonmovingentities.get(i).getX()]=1;
         }
         return check;
     }
@@ -402,6 +468,7 @@ public class Map {
                         item.get(i).setIschange(false);
                     }
                     if(item.get(i) instanceof itemDetonator){
+
                         Bomberlife=Bomberlife+1;
                         item.get(i).setIschange(false);
                     }
@@ -425,14 +492,14 @@ public class Map {
 
     public static void createItem(double x,double y){
         Random generator = new Random();
-        int key =generator.nextInt((3));
-        if(key==1) {
+        int key =generator.nextInt((12));
+        if(key==4) {
             item.add(new itemSpeedup(x,y,Sprite.itemSpeedup.getFxImage()));
         }
-        if(key==2){
+        if(key==8){
             item.add(new itemBigbomb(x,y,Sprite.itemBigbomb.getFxImage()));
         }
-        if(key==3){
+        if(key==12){
             item.add(new itemDetonator(x,y,Sprite.itemDetonator.getFxImage()));
         }
 
@@ -460,6 +527,7 @@ public class Map {
                 if (movingentities.get(i).getImg() == null) {
                     if(movingentities.get(i)==myBomber){
                         movingentities.remove(i);
+                        mediaLosePlayer.play();
                         Bomberlife=Bomberlife-1;
                         if(Bomberlife>0) {
                             myBomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
