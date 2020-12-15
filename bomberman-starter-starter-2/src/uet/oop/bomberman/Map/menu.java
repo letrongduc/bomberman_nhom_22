@@ -5,7 +5,6 @@ import javafx.animation.FadeTransition;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,10 +13,8 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;

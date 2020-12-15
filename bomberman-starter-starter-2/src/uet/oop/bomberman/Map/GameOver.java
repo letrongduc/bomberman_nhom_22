@@ -44,14 +44,15 @@ public class GameOver {
                 switch (event.getCode()) {
                     case Y:
                         BombermanGame.keyrender--;
-                            try {
-                                System.out.println("tao map 1 gameover");
-                                Map.map= new Map("res/levels/Level1.txt");
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                        try {
+                            System.out.println("tao map 1 gameover");
+                            Map.map = new Map("res/levels/Level1.txt");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 //                        window.setTitle("hi");
                         break;
+
                     case N:
                         System.exit(0);
                         break;

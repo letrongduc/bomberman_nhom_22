@@ -2,42 +2,22 @@ package uet.oop.bomberman;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
-import javafx.util.Duration;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import java.io.File;
-
-import javafx.event.*;
-import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.Map.GameOver;
 import uet.oop.bomberman.Map.menu;
 import uet.oop.bomberman.entities.*;
 
-import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.Item.item;
+import uet.oop.bomberman.entities.bombEffect.bombEffect;
+import uet.oop.bomberman.entities.movingentities.movingEntity;
+import uet.oop.bomberman.entities.nonmovingentities.Brick;
 
 
 import uet.oop.bomberman.Map.Map;
+import uet.oop.bomberman.entities.nonmovingentities.nonMovingEntity;
 
-import javax.swing.*;
-import javax.xml.bind.annotation.XmlType;
-import java.applet.AudioClip;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +31,11 @@ public class BombermanGame extends Application {
 
     public static GraphicsContext gc;
 
-    private List<Entity> nonmovingentities;
-    private List<Entity> nonmovingrerenderentities;
-    private List<Entity> movingentities=new ArrayList<>();
-    private List<Entity> item;
+    private List<nonMovingEntity>  nonmovingentities;
+    private List<nonMovingEntity>  nonmovingrerenderentities;
+    private List<movingEntity> movingentities=new ArrayList<>();
+    private List<bombEffect> bombeffects;
+    private List<item> item;
     public static int keyrender=0;
     public static Stage window;
 
@@ -114,9 +95,8 @@ public class BombermanGame extends Application {
                     render();
                     Map.deleteEntities();
                     if (Map.Bomberlife == 0) {
-                        System.out.println(keyrender);
                         new GameOver(window);
-                        Map.mediaBackgroundPlayer.stop();
+                       Map.mediaBackgroundPlayer.stop();
                     }
                 }
             }
@@ -144,6 +124,11 @@ public class BombermanGame extends Application {
                     }
                 }
         }
+        if(bombeffects!= null){
+            for(int i=0;i<bombeffects.size();i++){
+                gc.clearRect(32 * bombeffects.get(i).getX(), 32 * bombeffects.get(i).getY(), 32, 32);
+            }
+        }
         if(item!=null){
             for(int i=0;i<item.size();i++){
                 if (item.get(i).isIschange()== true){
@@ -158,10 +143,12 @@ public class BombermanGame extends Application {
             nonmovingentities = Map.nonmovingentities;
             nonmovingrerenderentities = Map.nonmovingrerenderentities;
             movingentities = Map.movingentities;
+            bombeffects=Map.bombeffects;
             item = Map.item;
             nonmovingentities.forEach(Entity::update);
             nonmovingrerenderentities.forEach(Entity::update);
             movingentities.forEach(Entity::update);
+            bombeffects.forEach(Entity::update);
             item.forEach(Entity::update);
         }
     }
@@ -177,6 +164,7 @@ public class BombermanGame extends Application {
             if (nonmovingrerenderentities != null) nonmovingrerenderentities.forEach(g -> g.render(gc));
             if (item != null) item.forEach(g -> g.render(gc));
             movingentities.forEach(g -> g.render(gc));
+            if(bombeffects!=null) bombeffects.forEach(g -> g.render(gc));
         }
     }
 }

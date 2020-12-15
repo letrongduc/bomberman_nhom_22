@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.bombEffect;
 
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
@@ -6,22 +6,24 @@ import javafx.scene.media.MediaPlayer;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.bombEffect.Explosion_horizontal;
+import uet.oop.bomberman.entities.movingentities.movingEntity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Duration;
-public class Bomb extends Entity{
+public class Bomb extends bombEffect {
     private List<Image> Bombsmall = new ArrayList<>();
     private List<Image> Bombbig = new ArrayList<>();
     private List<Image> Bomb_exploded =new ArrayList<>();
     public static int idbomb=1;
-    static public boolean isexploded=false;
+    public static boolean isexploded=false;
+
     private int timedelaycount =0;
     private int timeexploded=0;
+
     public boolean isEnd = false;
-    private Explosion_horizontal explosion_horizontal1;
     public static MediaPlayer mediaExplosionPlayer =
             new MediaPlayer(new Media(new File("sounds/explosion.wav").toURI().toString()));
 

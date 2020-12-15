@@ -1,23 +1,22 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.movingentities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Map.Map;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Balloom extends Entity {
+public class Balloom extends movingEntity {
     private List<Image> imgmoveleft=new ArrayList<>();
     private List<Image> imgmoveright=new ArrayList<>();
     private List<Image> imgmoveup=new ArrayList<>();
     private List<Image> imgmovedown=new ArrayList<>();
     private List<Image> imgdead=new ArrayList<>();
-    private int countisdead=0;
 
-    private int MovingLoopindex;
     public Balloom(int x, int y, Image img) {
         super(x, y, img);
         imgmoveleft.add(Sprite.balloom_left1.getFxImage());

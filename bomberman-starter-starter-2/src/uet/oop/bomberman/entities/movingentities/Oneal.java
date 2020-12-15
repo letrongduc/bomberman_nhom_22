@@ -1,23 +1,22 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.movingentities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Map.Map;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Oneal extends Entity {
+public class Oneal extends movingEntity {
     private List<Image> imgMoveLeft=new ArrayList<>();
     private List<Image> imgMoveRight=new ArrayList<>();
     private List<Image> imgMoveUp=new ArrayList<>();
     private List<Image> imgMoveDown=new ArrayList<>();
     private List<Image> imgDead=new ArrayList<>();
-    private int countisdead=0;
 
-    private int MovingLoopindex;
 
     private double speed;
     private double loop;

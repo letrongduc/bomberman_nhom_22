@@ -1,14 +1,15 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.nonmovingentities;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.Map.Map;
+import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Brick extends Entity {
+public class Brick extends nonMovingEntity {
     private List<Image> destroyedBrick=new ArrayList<>();
     private int counttime =0;
     private int destroydelaycount=1;
