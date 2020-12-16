@@ -95,8 +95,9 @@ public class Map {
 
         boolean isSpeedupok = false;
         boolean isBigBombok = false;
-        Bomberlife = 1;
+        Bomberlife = 2;
         Bomb.idbomb = 1;
+        Bomb.isexploded=false;
 
         area = readMap(path);
 
@@ -114,8 +115,6 @@ public class Map {
         // Tao scene
         Scene scene = new Scene(root, Color.GREEN);
         BombermanGame.window.setScene(scene);
-        System.out.println("window da chay");
-        System.out.println("keyrender map = " + BombermanGame.keyrender);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(javafx.scene.input.KeyEvent event) {
@@ -137,6 +136,7 @@ public class Map {
                         Map.myBomber.setKeymove("Right");
                         break;
                     case SPACE:
+                        System.out.println(1);
                         Map.startbomb();
                         break;
                 }
@@ -308,7 +308,7 @@ public class Map {
                 for (int i = 0; i < explosionlast.size(); i++) {
                     bombeffects.remove(explosionlast.get(i));
                 }
-            if (Bomb.idbomb == 2 && explosion2 != null) {
+            if ( explosion2 != null) {
                 for (int i = 0; i < explosion2.size(); i++) {
                     bombeffects.remove(explosion2.get(i));
                 }
@@ -436,7 +436,7 @@ public class Map {
                 }
             }
 
-
+            System.out.println(bombeffects.size());
         }
     }
 

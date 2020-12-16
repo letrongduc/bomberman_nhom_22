@@ -64,7 +64,7 @@ public class menu {
                         try {
                             System.out.println("tao map 1 menu");
                             System.out.println("keyrender menu = " + BombermanGame.keyrender);
-                            Map.map = new Map(1);
+                            Map.map = new Map(2);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

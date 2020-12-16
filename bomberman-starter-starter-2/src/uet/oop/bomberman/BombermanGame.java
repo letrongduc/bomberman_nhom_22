@@ -92,7 +92,6 @@ public class BombermanGame extends Application {
             public void handle() {
                 if(keyrender!=0)
                 {
-//                    System.out.println("kr handle = " + keyrender);
                     removerender();
                     update();
                     render();
