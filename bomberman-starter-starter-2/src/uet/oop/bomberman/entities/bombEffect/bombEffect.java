@@ -8,5 +8,6 @@ public abstract class bombEffect extends Entity {
     public bombEffect(double x, double y, Image img) {
         super(x, y, img);
     }
-     public abstract void update();
+
+    public abstract void update();
 }

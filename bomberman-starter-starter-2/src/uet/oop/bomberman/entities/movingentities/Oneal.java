@@ -11,12 +11,11 @@ import java.util.List;
 import java.util.Random;
 
 public class Oneal extends movingEntity {
-    private List<Image> imgMoveLeft=new ArrayList<>();
-    private List<Image> imgMoveRight=new ArrayList<>();
-    private List<Image> imgMoveUp=new ArrayList<>();
-    private List<Image> imgMoveDown=new ArrayList<>();
-    private List<Image> imgDead=new ArrayList<>();
-
+    private List<Image> imgMoveLeft = new ArrayList<>();
+    private List<Image> imgMoveRight = new ArrayList<>();
+    private List<Image> imgMoveUp = new ArrayList<>();
+    private List<Image> imgMoveDown = new ArrayList<>();
+    private List<Image> imgDead = new ArrayList<>();
 
     private double speed;
     private double loop;
@@ -48,7 +47,7 @@ public class Oneal extends movingEntity {
         loop = 0;
     }
 
-    private Image onealDead(){
+    private Image onealDead() {
         return imgDead.get(0);
     }
 
@@ -68,7 +67,8 @@ public class Oneal extends movingEntity {
     }
 
     private Image onealMoveRight() {
-        if (x < BombermanGame.WIDTH - 1 && Map.checkcollisionmoving(x, y, "Right", 1, 0.1)) x = (double) Math.round((x + speed) * 100) / 100;
+        if (x < BombermanGame.WIDTH - 1 && Map.checkcollisionmoving(x, y, "Right", 1, 0.1))
+            x = (double) Math.round((x + speed) * 100) / 100;
         if (img == imgMoveRight.get(0)) return imgMoveRight.get(1);
         else if (img == imgMoveRight.get(1)) return imgMoveRight.get(2);
         else if (img == imgMoveRight.get(2)) return imgMoveRight.get(0);
@@ -84,7 +84,8 @@ public class Oneal extends movingEntity {
     }
 
     private Image onealMoveDown() {
-        if (y < BombermanGame.HEIGHT - 1 && Map.checkcollisionmoving(x, y, "Down", 1, 0.1)) y = (double) Math.round((y + speed) * 100) / 100;
+        if (y < BombermanGame.HEIGHT - 1 && Map.checkcollisionmoving(x, y, "Down", 1, 0.1))
+            y = (double) Math.round((y + speed) * 100) / 100;
         if (img == imgMoveDown.get(0)) return imgMoveDown.get(1);
         else if (img == imgMoveDown.get(1)) return imgMoveDown.get(2);
         else if (img == imgMoveDown.get(2)) return imgMoveDown.get(0);
@@ -99,24 +100,20 @@ public class Oneal extends movingEntity {
             speed = 0.1;
             loop = 10;
         }
-//        System.out.println("bomberX,bomberY = " + Map.myBomber.getX() + " " + Map.myBomber.getY());
-//        System.out.println("x, y = " + x + " "  + y);
 
-        if(Map.myBomber.getY() == y && Map.myBomber.getX() != x && Map.checkLocalHor(x, y) == true && MovingLoopindex == 0){
-//            System.out.println("trung ngang");
+        if (Map.myBomber.getY() == y && Map.myBomber.getX() != x && Map.checkLocalHor(x, y) == true && MovingLoopindex == 0) {
             speed = 0.25;
             loop = 4;
-            if(x > Map.myBomber.getX()){
+            if (x > Map.myBomber.getX()) {
                 keymove = "Left";
             } else {
                 keymove = "Right";
             }
 
-        } else if(Map.myBomber.getX() == x && Map.myBomber.getY() != y && Map.checkLocalVer(x, y) == true && MovingLoopindex == 0){
-//            System.out.println("trung doc");
+        } else if (Map.myBomber.getX() == x && Map.myBomber.getY() != y && Map.checkLocalVer(x, y) == true && MovingLoopindex == 0) {
             speed = 0.25;
             loop = 4;
-            if(y > Map.myBomber.getY()){
+            if (y > Map.myBomber.getY()) {
                 keymove = "Up";
             } else {
                 keymove = "Down";
@@ -131,14 +128,12 @@ public class Oneal extends movingEntity {
 
     @Override
     public void update() {
-        if(isdead==false)
-        {
+        if (isdead == false) {
             MovingLoop();
-        }
-        else {
-            countisdead=countisdead+1;
-            if(countisdead <=12  ) img = onealDead();
-            else img=null;
+        } else {
+            countisdead = countisdead + 1;
+            if (countisdead <= 12) img = onealDead();
+            else img = null;
         }
     }
 }

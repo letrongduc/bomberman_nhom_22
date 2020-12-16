@@ -22,25 +22,24 @@ public class GameOver {
     int WIDTH = BombermanGame.WIDTH;
     private Scene scene2;
 
-    public GameOver(){
+    public GameOver() {
         mediaPlayer.mediaGameOverPlayer.play();
         BombermanGame.keyrender = 0;
-        //tao scene gameover
-        Image img2 = new Image("file:gameover.jpg");
+        Image img2 = new Image("file:Background/gameover.jpg");
         ImageView imgv2 = new ImageView(img2);
-        imgv2.setFitHeight(Sprite.SCALED_SIZE * HEIGHT-2);
-        imgv2.setFitWidth(Sprite.SCALED_SIZE * WIDTH-2);
+        imgv2.setFitHeight(Sprite.SCALED_SIZE * HEIGHT - 2);
+        imgv2.setFitWidth(Sprite.SCALED_SIZE * WIDTH - 2);
 
         Label label2 = new Label("Chơi lại (Y/N)?");
         label2.setTextFill(Color.WHITE);
         label2.setFont(new Font("Arial", 20));
         label2.setTranslateY(100);
-        label2.setTranslateX((Sprite.SCALED_SIZE * WIDTH-2) / 2 - 65);
+        label2.setTranslateX((Sprite.SCALED_SIZE * WIDTH - 2) / 2 - 65);
 
         Group layout1 = new Group();
         layout1.getChildren().addAll(imgv2, label2);
 
-        scene2 = new Scene(layout1, Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
+        scene2 = new Scene(layout1, Sprite.SCALED_SIZE * WIDTH - 2, Sprite.SCALED_SIZE * HEIGHT - 2);
         BombermanGame.window.setScene(scene2);
         scene2.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -51,12 +50,10 @@ public class GameOver {
                         try {
                             mediaPlayer.mediaGameOverPlayer.stop();
                             Map.map = null;
-                            System.out.println("tao map 1 gameover");
                             Map.map = new Map(1);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-//                        window.setTitle("hi");
                         break;
 
                     case N:

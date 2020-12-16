@@ -25,23 +25,22 @@ public class menu {
 
     private Scene scene1;
 
-
-    public menu(){
+    public menu() {
         mediaPlayer.mediaMenuPlayer.play();
 
         int HEIGHT = BombermanGame.HEIGHT;
         int WIDTH = BombermanGame.WIDTH;
         // tao scene menu
-        Image img1 = new Image("file:menu.jpg");
+        Image img1 = new Image("file:Background/menu.jpg");
         ImageView imgv1 = new ImageView(img1);
-        imgv1.setFitHeight(Sprite.SCALED_SIZE * HEIGHT-2);
-        imgv1.setFitWidth(Sprite.SCALED_SIZE * WIDTH-2);
+        imgv1.setFitHeight(Sprite.SCALED_SIZE * HEIGHT - 2);
+        imgv1.setFitWidth(Sprite.SCALED_SIZE * WIDTH - 2);
 
         Label label1 = new Label("Bấm cách để chơi game >.<");
         label1.setTextFill(Color.WHITE);
         label1.setFont(new Font("Arial", 30));
-        label1.setTranslateY(Sprite.SCALED_SIZE * HEIGHT-100);
-        label1.setTranslateX((Sprite.SCALED_SIZE * WIDTH-2) / 2 - 180);
+        label1.setTranslateY(Sprite.SCALED_SIZE * HEIGHT - 100);
+        label1.setTranslateX((Sprite.SCALED_SIZE * WIDTH - 2) / 2 - 180);
 
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), label1);
         fadeTransition.setFromValue(0.0);
@@ -52,7 +51,7 @@ public class menu {
         Group layout = new Group();
         layout.getChildren().addAll(imgv1, label1);
 
-        scene1 = new Scene(layout, Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
+        scene1 = new Scene(layout, Sprite.SCALED_SIZE * WIDTH - 2, Sprite.SCALED_SIZE * HEIGHT - 2);
         BombermanGame.window.setScene(scene1);
 
         scene1.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -62,8 +61,6 @@ public class menu {
                     case SPACE:
                         BombermanGame.keyrender++;
                         try {
-                            System.out.println("tao map 1 menu");
-                            System.out.println("keyrender menu = " + BombermanGame.keyrender);
                             Map.map = new Map(1);
                         } catch (IOException e) {
                             e.printStackTrace();

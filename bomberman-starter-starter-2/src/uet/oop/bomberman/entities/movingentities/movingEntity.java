@@ -4,9 +4,9 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 
 public abstract class movingEntity extends Entity {
-    protected boolean isdead= false;
-    protected String keymove="";
-    protected int countisdead=0;
+    protected boolean isdead = false;
+    protected String keymove = "";
+    protected int countisdead = 0;
     protected int MovingLoopindex;
 
     public movingEntity(double x, double y, Image img) {
@@ -22,10 +22,10 @@ public abstract class movingEntity extends Entity {
     public String getKeymove() {
         return keymove;
     }
+
     public void setKeymove(String keymove) {
         this.keymove = keymove;
     }
-
 
     public abstract void update();
 }

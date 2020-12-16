@@ -64,7 +64,7 @@ public class Minvo extends movingEntity {
         MovingLoopindex = 0;
     }
 
-    private Image minvoDead(){
+    private Image minvoDead() {
         return imgDead.get(0);
     }
 
@@ -112,30 +112,27 @@ public class Minvo extends movingEntity {
     }
 
     private ArrayList<toado> truyhoi(ArrayList<toado> road, HashMap<toado, ArrayList<toado>> map, toado E, toado S) {
-
-            toado temp = E;
-            for (toado key : map.keySet()) {
-                ArrayList<toado> ar = map.get(key);
-                for (int i = 0; i < ar.size(); i++) {
-                    if (ar.get(i).equalToado(E)) {
-                        temp = key;
-                        road.add(temp);
-                        break;
-                    }
+        toado temp = E;
+        for (toado key : map.keySet()) {
+            ArrayList<toado> ar = map.get(key);
+            for (int i = 0; i < ar.size(); i++) {
+                if (ar.get(i).equalToado(E)) {
+                    temp = key;
+                    road.add(temp);
+                    break;
                 }
             }
-            E = temp;
-            if (S.equalToado(E) == false) {
-                road = truyhoi(road, map, E, S);
-            }
-            return road;
-
+        }
+        E = temp;
+        if (S.equalToado(E) == false) {
+            road = truyhoi(road, map, E, S);
+        }
+        return road;
     }
 
     private void MovingLoop() {
         if (MovingLoopindex == 10) MovingLoopindex = 0;
         if (MovingLoopindex == 0) {
-//            System.out.println("toa do quai: " + x + " " + y);
             boolean flag = false;
             List<toado> queue = new ArrayList<>();
             List<toado> pre = new ArrayList<>();
@@ -213,14 +210,12 @@ public class Minvo extends movingEntity {
 
     @Override
     public void update() {
-        if(isdead==false)
-        {
+        if (isdead == false) {
             MovingLoop();
-        }
-        else {
-            countisdead=countisdead+1;
-            if(countisdead <=12  ) img = minvoDead();
-            else img=null;
+        } else {
+            countisdead = countisdead + 1;
+            if (countisdead <= 12) img = minvoDead();
+            else img = null;
         }
     }
 }

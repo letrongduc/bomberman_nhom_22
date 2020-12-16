@@ -41,13 +41,12 @@ public class Map {
     public static List<bombEffect> bombeffects;
     public static List<item> item;
     private static ArrayList<String> area;
+
     public static Bomb bomb;
-    //    private static GraphicsContext gc;
     public static Canvas canvas;
     public static int level;
     public static int doc;
     public static int ngang;
-
 
     public static List<bombEffect> explosion1;
     public static List<bombEffect> explosion2;
@@ -59,10 +58,9 @@ public class Map {
     private static boolean isSpeedupok;
     private static boolean isBigBombok;
 
-    //   public static int counttime = 0;
     public static Bomber myBomber;
     public static int Bomberlife;
-    private int tmp = 31;
+    private int tmp = 70;
 
     public ArrayList readMap(String path) throws IOException {
         Scanner scanner = new Scanner(Paths.get(path), "UTF-8");
@@ -81,12 +79,11 @@ public class Map {
 
     public Map(int Level) throws IOException {
         mediaPlayer.mediaBackgroundPlayer.play();
-
         String path = "res/levels/Level" + Level + ".txt";
         nonmovingentities = new ArrayList<>();
         nonmovingrerenderentities = new ArrayList<>();
         movingentities = new ArrayList<>();
-        bombeffects=new ArrayList<>();
+        bombeffects = new ArrayList<>();
         item = new ArrayList<>();
         area = new ArrayList<>();
 
@@ -101,17 +98,12 @@ public class Map {
         boolean isBigBombok = false;
         Bomberlife = 2;
         Bomb.idbomb = 1;
-        Bomb.isexploded=false;
+        Bomb.isexploded = false;
 
         area = readMap(path);
-
-
-//        Map.mediaBackgroundPlayer.play();
-
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * Map.ngang - 2, Sprite.SCALED_SIZE * Map.doc - 2);
         BombermanGame.gc = canvas.getGraphicsContext2D();
-        System.out.println("gc da chay");
         // Tao root container
         Group root = new Group();
         root.getChildren().add(canvas);
@@ -140,7 +132,6 @@ public class Map {
                         Map.myBomber.setKeymove("Right");
                         break;
                     case SPACE:
-                        System.out.println(1);
                         Map.startbomb();
                         break;
                 }
@@ -188,7 +179,7 @@ public class Map {
         }
     }
 
-    public void levelUp(){
+    public void levelUp() {
         try {
             level++;
             map = new Map(level);
@@ -268,12 +259,9 @@ public class Map {
             double noMoveY = nonmovingentities.get(i).getY();
             double bomberY = Map.myBomber.getY();
             if (noMoveX == x && checkSpace(bomberY, y, noMoveY) == true) {
-//                System.out.println("chan doc");
-//                System.out.println(nonmovingentities.get(i).getX() + " " + nonmovingentities.get(i).getY());
                 return false;
             }
         }
-//        System.out.println("thoang doc");
         return true;
     }
 
@@ -283,12 +271,9 @@ public class Map {
             double noMoveY = nonmovingentities.get(i).getY();
             double bomberX = Map.myBomber.getX();
             if (noMoveY == y && checkSpace(bomberX, x, noMoveX) == true) {
-//                System.out.println("chan ngang");
-//                System.out.println(nonmovingentities.get(i).getX() + " " + nonmovingentities.get(i).getY());
                 return false;
             }
         }
-//        System.out.println("thoang ngang");
         return true;
     }
 
@@ -312,7 +297,7 @@ public class Map {
                 for (int i = 0; i < explosionlast.size(); i++) {
                     bombeffects.remove(explosionlast.get(i));
                 }
-            if ( explosion2 != null) {
+            if (explosion2 != null) {
                 for (int i = 0; i < explosion2.size(); i++) {
                     bombeffects.remove(explosion2.get(i));
                 }
@@ -362,7 +347,7 @@ public class Map {
 
             }
 
-             bombeffects.add(bomb);
+            bombeffects.add(bomb);
 
             for (int i = 0; i < explosion1.size(); i++) {
                 bombeffects.add(explosion1.get(i));
@@ -379,7 +364,6 @@ public class Map {
             for (int i = 0; i < 4; i++) {
                 isokBombEffect[i] = 0;
             }
-
 
             for (int i = 0; i < nonmovingentities.size(); i++) {
                 for (int j = 0; j < explosion1.size(); j++) {
@@ -439,23 +423,21 @@ public class Map {
                     }
                 }
             }
-
-            System.out.println(bombeffects.size());
         }
     }
 
     public static <bombEffect> void checkdeadbybomb(double dx, double dy) {
         for (int i = 0; i < movingentities.size(); i++) {
-                if (checkcolision(dx, dy, movingentities.get(i).getX(), movingentities.get(i).getY()) == true) {
-                    movingentities.get(i).setIsdead(true);
-                }
+            if (checkcolision(dx, dy, movingentities.get(i).getX(), movingentities.get(i).getY()) == true) {
+                movingentities.get(i).setIsdead(true);
+            }
         }
 
     }
 
-    public static boolean checkdeadbyenermy(double dx,double dy){
+    public static boolean checkdeadbyenermy(double dx, double dy) {
         for (int i = 0; i < movingentities.size(); i++) {
-            if (checkcolision(dx, dy, movingentities.get(i).getX(), movingentities.get(i).getY()) == true && movingentities.get(i) instanceof Bomber ==false){
+            if (checkcolision(dx, dy, movingentities.get(i).getX(), movingentities.get(i).getY()) == true && movingentities.get(i) instanceof Bomber == false) {
                 return true;
             }
         }
@@ -515,7 +497,7 @@ public class Map {
             }
         }
         if (key == 4) {
-                item.add(new itemDetonator(x, y, Sprite.itemDetonator.getFxImage()));
+            item.add(new itemDetonator(x, y, Sprite.itemDetonator.getFxImage()));
         }
 
     }
@@ -532,41 +514,40 @@ public class Map {
             }
         }
         for (int i = 0; i < movingentities.size(); i++) {
-                if (movingentities.get(i).getImg() == null) {
-                    if (movingentities.get(i) == myBomber) {
+            if (movingentities.get(i).getImg() == null) {
+                if (movingentities.get(i) == myBomber) {
 
-                        movingentities.remove(i);
-                        Bomberlife = Bomberlife - 1;
-                        if (Bomberlife > 0) {
-                            {
-                                myBomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
-                                Bomb.idbomb = 1;
-                                isSpeedupok=false;
-                                isBigBombok=false;
-                                movingentities.add(myBomber);
-                            }
+                    movingentities.remove(i);
+                    Bomberlife = Bomberlife - 1;
+                    if (Bomberlife > 0) {
+                        {
+                            myBomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
+                            Bomb.idbomb = 1;
+                            isSpeedupok = false;
+                            isBigBombok = false;
+                            movingentities.add(myBomber);
                         }
-                    } else {
-                        createItem(movingentities.get(i).getX(), movingentities.get(i).getY());
-                        movingentities.remove(i);
-                        System.out.println("size = " + movingentities.size());
-                        if(movingentities.size() == 1 && Bomberlife != 0){
-                            if(level < 2){
-                                BombermanGame.keyrender--;
-                                mediaPlayer.mediaBackgroundPlayer.stop();
-                                mediaPlayer.mediaNextLevelPlayer.play();
-                                map.levelUp();
-                            } else {
-                                mediaPlayer.mediaBackgroundPlayer.stop();
-                                BombermanGame.keyrender = 0;
-                                new WinBackground();
-                                Timeline time = new Timeline(new KeyFrame(Duration.seconds(1), e -> map.timelabel()));
-                                time.setCycleCount(Timeline.INDEFINITE);
-                                time.play();
-                            }
+                    }
+                } else {
+                    createItem(movingentities.get(i).getX(), movingentities.get(i).getY());
+                    movingentities.remove(i);
+                    if (movingentities.size() == 1 && Bomberlife != 0) {
+                        if (level < 2) {
+                            BombermanGame.keyrender--;
+                            mediaPlayer.mediaBackgroundPlayer.stop();
+                            mediaPlayer.mediaNextLevelPlayer.play();
+                            map.levelUp();
+                        } else {
+                            mediaPlayer.mediaBackgroundPlayer.stop();
+                            BombermanGame.keyrender = 0;
+                            new WinBackground();
+                            Timeline time = new Timeline(new KeyFrame(Duration.seconds(1), e -> map.timelabel()));
+                            time.setCycleCount(Timeline.INDEFINITE);
+                            time.play();
                         }
                     }
                 }
+            }
         }
         for (int i = 0; i < item.size(); i++) {
             if (item.get(i).getImg() == null) {
@@ -574,12 +555,13 @@ public class Map {
             }
         }
     }
-    public void timelabel(){
+
+    public void timelabel() {
         BombermanGame.window.setTitle("System will exit in: " + tmp + " seconds");
-        if(tmp >= 0){
+        if (tmp >= 0) {
             tmp--;
         }
-        if(tmp == -1){
+        if (tmp == -1) {
             System.exit(0);
         }
     }

@@ -33,17 +33,13 @@ public class BombermanGame extends Application {
 
     public static GraphicsContext gc;
 
-    private List<nonMovingEntity>  nonmovingentities;
-    private List<nonMovingEntity>  nonmovingrerenderentities;
-    private List<movingEntity> movingentities=new ArrayList<>();
+    private List<nonMovingEntity> nonmovingentities;
+    private List<nonMovingEntity> nonmovingrerenderentities;
+    private List<movingEntity> movingentities = new ArrayList<>();
     private List<bombEffect> bombeffects;
     private List<item> item;
-    public static int keyrender=0;
+    public static int keyrender = 0;
     public static Stage window;
-
-
-
-//    public static Bomber myBomber;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -66,7 +62,6 @@ public class BombermanGame extends Application {
         @Override
         public void handle(long now) {
             // some delay
-
             if ((now - prevTime) < sleepNs) {
 
                 return;
@@ -78,21 +73,19 @@ public class BombermanGame extends Application {
         public abstract void handle();
 
     }
+
     @Override
     public void start(Stage stage) throws IOException {
         window = stage;
         new mediaPlayer();
         new menu();
-//        stage.setResizable(false);
         window.setTitle("Game Start");
         window.show();
 
         AnimationTimerExt timer = new AnimationTimerExt(100) {
             @Override
             public void handle() {
-                if(keyrender!=0)
-                {
-                    System.out.println("handling");
+                if (keyrender != 0) {
                     removerender();
                     update();
                     render();
@@ -113,46 +106,42 @@ public class BombermanGame extends Application {
         timer.start();
     }
 
-    public void removerender(){
-        if(movingentities!= null)
-        {
+    public void removerender() {
+        if (movingentities != null) {
             if (movingentities.size() != 0)
                 for (int i = 0; i < movingentities.size(); i++) {
-//            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
                     gc.clearRect(32 * movingentities.get(i).getX(), 32 * movingentities.get(i).getY(), 32, 32);
                 }
         }
-        if(nonmovingrerenderentities!= null) {
+        if (nonmovingrerenderentities != null) {
             if (nonmovingrerenderentities.size() != 0)
                 for (int i = 0; i < nonmovingrerenderentities.size(); i++) {
-//            System.out.println(movingentities.get(i).getX()+","+movingentities.get(i).getY());
-                    if(nonmovingrerenderentities.get(i) instanceof Brick == true && nonmovingrerenderentities.get(i).isIschange() ==true)
-                    {
+                    if (nonmovingrerenderentities.get(i) instanceof Brick == true && nonmovingrerenderentities.get(i).isIschange() == true) {
 
                         gc.clearRect(32 * nonmovingrerenderentities.get(i).getX(), 32 * nonmovingrerenderentities.get(i).getY(), 32, 32);
                     }
                 }
         }
-        if(bombeffects!= null){
-            for(int i=0;i<bombeffects.size();i++){
+        if (bombeffects != null) {
+            for (int i = 0; i < bombeffects.size(); i++) {
                 gc.clearRect(32 * bombeffects.get(i).getX(), 32 * bombeffects.get(i).getY(), 32, 32);
             }
         }
-        if(item!=null){
-            for(int i=0;i<item.size();i++){
-                if (item.get(i).isIschange()== true){
+        if (item != null) {
+            for (int i = 0; i < item.size(); i++) {
+                if (item.get(i).isIschange() == true) {
                     gc.clearRect(32 * item.get(i).getX(), 32 * item.get(i).getY(), 32, 32);
                 }
             }
         }
     }
+
     public void update() {
-        if(keyrender != 0)
-        {
+        if (keyrender != 0) {
             nonmovingentities = Map.nonmovingentities;
             nonmovingrerenderentities = Map.nonmovingrerenderentities;
             movingentities = Map.movingentities;
-            bombeffects=Map.bombeffects;
+            bombeffects = Map.bombeffects;
             item = Map.item;
             nonmovingentities.forEach(Entity::update);
             nonmovingrerenderentities.forEach(Entity::update);
@@ -163,18 +152,15 @@ public class BombermanGame extends Application {
     }
 
     public void render() {
-        if(keyrender!=0)
-        {
-            System.out.println("---rendering---");
+        if (keyrender != 0) {
             if (keyrender == 1) {
-                System.out.println("ok");
                 nonmovingentities.forEach(g -> g.render(gc));
                 keyrender = keyrender + 1;
             }
             if (nonmovingrerenderentities != null) nonmovingrerenderentities.forEach(g -> g.render(gc));
             if (item != null) item.forEach(g -> g.render(gc));
             movingentities.forEach(g -> g.render(gc));
-            if(bombeffects!=null) bombeffects.forEach(g -> g.render(gc));
+            if (bombeffects != null) bombeffects.forEach(g -> g.render(gc));
         }
     }
 }
