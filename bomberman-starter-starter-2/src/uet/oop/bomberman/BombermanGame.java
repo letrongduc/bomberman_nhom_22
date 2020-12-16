@@ -92,6 +92,7 @@ public class BombermanGame extends Application {
             public void handle() {
                 if(keyrender!=0)
                 {
+                    System.out.println("handling");
                     removerender();
                     update();
                     render();
@@ -164,6 +165,7 @@ public class BombermanGame extends Application {
     public void render() {
         if(keyrender!=0)
         {
+            System.out.println("---rendering---");
             if (keyrender == 1) {
                 System.out.println("ok");
                 nonmovingentities.forEach(g -> g.render(gc));

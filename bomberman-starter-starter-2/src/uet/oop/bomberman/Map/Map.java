@@ -1,5 +1,8 @@
 package uet.oop.bomberman.Map;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -59,6 +62,7 @@ public class Map {
     //   public static int counttime = 0;
     public static Bomber myBomber;
     public static int Bomberlife;
+    private int tmp = 31;
 
     public ArrayList readMap(String path) throws IOException {
         Scanner scanner = new Scanner(Paths.get(path), "UTF-8");
@@ -553,17 +557,30 @@ public class Map {
                                 mediaPlayer.mediaNextLevelPlayer.play();
                                 map.levelUp();
                             } else {
-
+                                mediaPlayer.mediaBackgroundPlayer.stop();
+                                BombermanGame.keyrender = 0;
+                                new WinBackground();
+                                Timeline time = new Timeline(new KeyFrame(Duration.seconds(1), e -> map.timelabel()));
+                                time.setCycleCount(Timeline.INDEFINITE);
+                                time.play();
                             }
                         }
                     }
                 }
-
         }
         for (int i = 0; i < item.size(); i++) {
             if (item.get(i).getImg() == null) {
                 item.remove(i);
             }
+        }
+    }
+    public void timelabel(){
+        BombermanGame.window.setTitle("System will exit in: " + tmp + " seconds");
+        if(tmp >= 0){
+            tmp--;
+        }
+        if(tmp == -1){
+            System.exit(0);
         }
     }
 }

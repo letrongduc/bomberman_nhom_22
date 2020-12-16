@@ -17,6 +17,7 @@ public class mediaPlayer {
     public static AudioClip mediaNextLevelPlayer = new AudioClip(Paths.get("sounds/nextLevel.wav").toUri().toString());
     public static AudioClip mediaExplosionPlayer = new AudioClip(Paths.get("sounds/soundBomb.wav").toUri().toString());
     public static AudioClip mediaGameOverPlayer = new AudioClip(Paths.get("sounds/gameOver.mp3").toUri().toString());
+    public static AudioClip mediaWinPlayer = new AudioClip(Paths.get("sounds/winSound.mp3").toUri().toString());
 
     public mediaPlayer() {
         mediaBackgroundPlayer.setCycleCount(AudioClip.INDEFINITE);
