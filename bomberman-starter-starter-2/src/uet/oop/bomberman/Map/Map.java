@@ -20,6 +20,7 @@ import uet.oop.bomberman.entities.nonmovingentities.Brick;
 import uet.oop.bomberman.entities.nonmovingentities.Wall;
 import uet.oop.bomberman.entities.nonmovingentities.nonMovingEntity;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.media.mediaPlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,8 +44,7 @@ public class Map {
     public static int level;
     public static int doc;
     public static int ngang;
-    public static MediaPlayer mediaLosePlayer =
-            new MediaPlayer(new Media(new File("sounds/lose.wav").toURI().toString()));
+
 
     public static List<bombEffect> explosion1;
     public static List<bombEffect> explosion2;
@@ -59,19 +59,6 @@ public class Map {
     //   public static int counttime = 0;
     public static Bomber myBomber;
     public static int Bomberlife;
-
-
-    public static MediaPlayer mediaBackgroundPlayer =
-            new MediaPlayer(new Media(new File("sounds/background.wav").toURI().toString()));
-
-
-//    public static GraphicsContext getGc() {
-//        return gc;
-//    }
-
-    public Canvas getCanvas() {
-        return canvas;
-    }
 
     public ArrayList readMap(String path) throws IOException {
         Scanner scanner = new Scanner(Paths.get(path), "UTF-8");
@@ -88,7 +75,10 @@ public class Map {
         return area;
     }
 
-    public Map(String path) throws IOException {
+    public Map(int Level) throws IOException {
+        mediaPlayer.mediaBackgroundPlayer.play();
+
+        String path = "res/levels/Level" + Level + ".txt";
         nonmovingentities = new ArrayList<>();
         nonmovingrerenderentities = new ArrayList<>();
         movingentities = new ArrayList<>();
@@ -106,15 +96,11 @@ public class Map {
         boolean isSpeedupok = false;
         boolean isBigBombok = false;
         Bomberlife = 1;
+        Bomb.idbomb = 1;
 
-        mediaBackgroundPlayer.play();
         area = readMap(path);
 
-        mediaBackgroundPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                mediaBackgroundPlayer.seek(Duration.ZERO);
-            }
-        });
+
 //        Map.mediaBackgroundPlayer.play();
 
         // Tao Canvas
@@ -129,6 +115,7 @@ public class Map {
         Scene scene = new Scene(root, Color.GREEN);
         BombermanGame.window.setScene(scene);
         System.out.println("window da chay");
+        System.out.println("keyrender map = " + BombermanGame.keyrender);
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(javafx.scene.input.KeyEvent event) {
@@ -194,6 +181,15 @@ public class Map {
                     movingentities.add(object);
                 }
             }
+        }
+    }
+
+    public void levelUp(){
+        try {
+            level++;
+            map = new Map(level);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -467,15 +463,17 @@ public class Map {
             for (int i = 0; i < item.size(); i++) {
                 if (checkcolision(myBomber.getX(), myBomber.getY(), item.get(i).getX(), item.get(i).getY()) == true) {
                     if (item.get(i) instanceof itemSpeedup) {
+                        mediaPlayer.mediaNewLifePlayer.play();
                         myBomber.setMovedistance(0.5);
                         item.get(i).setIschange(false);
                     }
                     if (item.get(i) instanceof itemBigbomb) {
+                        mediaPlayer.mediaNewLifePlayer.play();
                         Bomb.idbomb = 2;
                         item.get(i).setIschange(false);
                     }
                     if (item.get(i) instanceof itemDetonator) {
-
+                        mediaPlayer.mediaNewLifePlayer.play();
                         Bomberlife = Bomberlife + 1;
                         item.get(i).setIschange(false);
                     }
@@ -518,7 +516,7 @@ public class Map {
 
     }
 
-    public static void deleteEntities() {
+    public static void deleteEntities() throws IOException {
         if (nonmovingrerenderentities != null) {
             for (int i = 0; i < nonmovingrerenderentities.size(); i++) {
                 if (nonmovingrerenderentities.get(i).getImg() == null) {
@@ -532,12 +530,13 @@ public class Map {
         for (int i = 0; i < movingentities.size(); i++) {
                 if (movingentities.get(i).getImg() == null) {
                     if (movingentities.get(i) == myBomber) {
+
                         movingentities.remove(i);
-                        mediaLosePlayer.play();
                         Bomberlife = Bomberlife - 1;
                         if (Bomberlife > 0) {
                             {
                                 myBomber = new Bomber(1, 1, Sprite.player_right.getFxImage());
+                                Bomb.idbomb = 1;
                                 isSpeedupok=false;
                                 isBigBombok=false;
                                 movingentities.add(myBomber);
@@ -546,6 +545,17 @@ public class Map {
                     } else {
                         createItem(movingentities.get(i).getX(), movingentities.get(i).getY());
                         movingentities.remove(i);
+                        System.out.println("size = " + movingentities.size());
+                        if(movingentities.size() == 1 && Bomberlife != 0){
+                            if(level < 2){
+                                BombermanGame.keyrender--;
+                                mediaPlayer.mediaBackgroundPlayer.stop();
+                                mediaPlayer.mediaNextLevelPlayer.play();
+                                map.levelUp();
+                            } else {
+
+                            }
+                        }
                     }
                 }
 

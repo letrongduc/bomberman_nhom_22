@@ -13,6 +13,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.util.Duration;
+import uet.oop.bomberman.media.mediaPlayer;
+
 public class Bomb extends bombEffect {
     private List<Image> Bombsmall = new ArrayList<>();
     private List<Image> Bombbig = new ArrayList<>();
@@ -24,8 +26,7 @@ public class Bomb extends bombEffect {
     private int timeexploded=0;
 
     public boolean isEnd = false;
-    public static MediaPlayer mediaExplosionPlayer =
-            new MediaPlayer(new Media(new File("sounds/explosion.wav").toURI().toString()));
+
 
     public Bomb(double x,double y,Image img){
         super(x,y,img);
@@ -39,9 +40,6 @@ public class Bomb extends bombEffect {
         Bomb_exploded.add(Sprite.bomb_exploded.getFxImage());
         Bomb_exploded.add(Sprite.bomb_exploded1.getFxImage());
         Bomb_exploded.add(Sprite.bomb_exploded2.getFxImage());
-
-        mediaExplosionPlayer.setCycleCount(0);
-
     }
 
     public Image Bombpreparingexplode(){
@@ -63,7 +61,6 @@ public class Bomb extends bombEffect {
     public Image looptime(){
             if (timedelaycount == 24)
             {
-                mediaExplosionPlayer.stop();
                 isEnd =true;
                 if(timeexploded != 6){
                     Map.checkdeadbybomb(this.x,this.y);
@@ -79,7 +76,7 @@ public class Bomb extends bombEffect {
             }
             else {
                 if(timedelaycount == 23){
-                    mediaExplosionPlayer.play();
+                    mediaPlayer.mediaExplosionPlayer.play();
                 }
                 timedelaycount=timedelaycount+1;
 

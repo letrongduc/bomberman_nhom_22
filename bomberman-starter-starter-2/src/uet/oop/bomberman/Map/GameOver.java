@@ -12,15 +12,19 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.media.mediaPlayer;
 
 import java.io.IOException;
 
 public class GameOver {
+    public static GameOver go;
     int HEIGHT = BombermanGame.HEIGHT;
     int WIDTH = BombermanGame.WIDTH;
     private Scene scene2;
 
-    public GameOver(Stage window){
+    public GameOver(){
+        mediaPlayer.mediaGameOverPlayer.play();
+        BombermanGame.keyrender = 0;
         //tao scene gameover
         Image img2 = new Image("file:gameover.jpg");
         ImageView imgv2 = new ImageView(img2);
@@ -37,16 +41,18 @@ public class GameOver {
         layout1.getChildren().addAll(imgv2, label2);
 
         scene2 = new Scene(layout1, Sprite.SCALED_SIZE * WIDTH-2, Sprite.SCALED_SIZE * HEIGHT-2);
-        window.setScene(scene2);
+        BombermanGame.window.setScene(scene2);
         scene2.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(javafx.scene.input.KeyEvent event) {
                 switch (event.getCode()) {
                     case Y:
-                        BombermanGame.keyrender--;
+                        BombermanGame.keyrender++;
                         try {
+                            mediaPlayer.mediaGameOverPlayer.stop();
+                            Map.map = null;
                             System.out.println("tao map 1 gameover");
-                            Map.map = new Map("res/levels/Level1.txt");
+                            Map.map = new Map(1);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

@@ -112,22 +112,24 @@ public class Minvo extends movingEntity {
     }
 
     private ArrayList<toado> truyhoi(ArrayList<toado> road, HashMap<toado, ArrayList<toado>> map, toado E, toado S) {
-        toado temp = E;
-        for (toado key : map.keySet()) {
-            ArrayList<toado> ar = map.get(key);
-            for (int i = 0; i < ar.size(); i++) {
-                if (ar.get(i).equalToado(E)) {
-                    temp = key;
-                    road.add(temp);
-                    break;
+
+            toado temp = E;
+            for (toado key : map.keySet()) {
+                ArrayList<toado> ar = map.get(key);
+                for (int i = 0; i < ar.size(); i++) {
+                    if (ar.get(i).equalToado(E)) {
+                        temp = key;
+                        road.add(temp);
+                        break;
+                    }
                 }
             }
-        }
-        E = temp;
-        if (S.equalToado(E) == false) {
-            road = truyhoi(road, map, E, S);
-        }
-        return road;
+            E = temp;
+            if (S.equalToado(E) == false) {
+                road = truyhoi(road, map, E, S);
+            }
+            return road;
+
     }
 
     private void MovingLoop() {
@@ -179,7 +181,7 @@ public class Minvo extends movingEntity {
                     break;
                 }
             }
-            if (flag == false) {
+            if (flag == false || E.equalToado(St) == true) {
                 keymove = getkeymoving();
             } else {
                 road.add(E);

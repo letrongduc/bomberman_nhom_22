@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.util.Duration;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.media.mediaPlayer;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,17 +24,10 @@ import java.io.IOException;
 public class menu {
 
     private Scene scene1;
-    public static MediaPlayer mediaMenuPlayer =
-            new MediaPlayer(new Media(new File("sounds/menumusic.wav").toURI().toString()));
+
 
     public menu(){
-
-        mediaMenuPlayer.setOnEndOfMedia(new Runnable() {
-            public void run() {
-                mediaMenuPlayer.seek(Duration.ZERO);
-            }
-        });
-        mediaMenuPlayer.play();
+        mediaPlayer.mediaMenuPlayer.play();
 
         int HEIGHT = BombermanGame.HEIGHT;
         int WIDTH = BombermanGame.WIDTH;
@@ -69,11 +63,12 @@ public class menu {
                         BombermanGame.keyrender++;
                         try {
                             System.out.println("tao map 1 menu");
-                            Map.map = new Map("res/levels/Level1.txt");
+                            System.out.println("keyrender menu = " + BombermanGame.keyrender);
+                            Map.map = new Map(1);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        mediaMenuPlayer.stop();
+                        mediaPlayer.mediaMenuPlayer.stop();
                         break;
                 }
             }

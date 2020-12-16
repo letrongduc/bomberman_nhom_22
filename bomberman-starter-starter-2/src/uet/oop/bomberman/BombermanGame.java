@@ -11,13 +11,15 @@ import uet.oop.bomberman.entities.*;
 
 import uet.oop.bomberman.entities.Item.item;
 import uet.oop.bomberman.entities.bombEffect.bombEffect;
+import uet.oop.bomberman.entities.movingentities.Bomber;
 import uet.oop.bomberman.entities.movingentities.movingEntity;
 import uet.oop.bomberman.entities.nonmovingentities.Brick;
-
+import uet.oop.bomberman.media.mediaPlayer;
 
 import uet.oop.bomberman.Map.Map;
 import uet.oop.bomberman.entities.nonmovingentities.nonMovingEntity;
 
+import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,10 +81,10 @@ public class BombermanGame extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         window = stage;
-
+        new mediaPlayer();
         new menu();
 //        stage.setResizable(false);
-        window.setTitle("game");
+        window.setTitle("Game Start");
         window.show();
 
         AnimationTimerExt timer = new AnimationTimerExt(100) {
@@ -90,14 +92,21 @@ public class BombermanGame extends Application {
             public void handle() {
                 if(keyrender!=0)
                 {
+//                    System.out.println("kr handle = " + keyrender);
                     removerender();
                     update();
                     render();
-                    Map.deleteEntities();
-                    if (Map.Bomberlife == 0) {
-                        new GameOver(window);
-                       Map.mediaBackgroundPlayer.stop();
+                    try {
+                        Map.deleteEntities();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
+                    if (Map.Bomberlife == 0) {
+                        Map.map = null;
+                        GameOver.go = new GameOver();
+                        mediaPlayer.mediaBackgroundPlayer.stop();
+                    }
+                    window.setTitle("Live: " + Map.map.Bomberlife);
                 }
             }
         };
